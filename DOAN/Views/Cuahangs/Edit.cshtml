@@ -1,0 +1,75 @@
+﻿@model DOAN.Models.Cuahang
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1 class="text-black">Chỉnh sửa cửa hàng</h1>
+
+<div class="container p-4" style="background-color: #fff; border-radius: 10px; color: #000;">
+    <h4 class="text-black">Trang chỉnh sửa cửa hàng</h4>
+    <hr />
+    <form asp-action="Edit" class="form-horizontal">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="MaCh" />
+
+        <!-- Tên cửa hàng -->
+        <div class="form-group row mb-3">
+            <label asp-for="Ten" class="col-sm-3 col-form-label text-black fw-bold"></label>
+            <div class="col-sm-9">
+                <input asp-for="Ten" class="form-control" />
+                <span asp-validation-for="Ten" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Số điện thoại -->
+        <div class="form-group row mb-3">
+            <label asp-for="DienThoai" class="col-sm-3 col-form-label text-black fw-bold"></label>
+            <div class="col-sm-9">
+                <input asp-for="DienThoai" class="form-control" />
+                <span asp-validation-for="DienThoai" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group row mb-3">
+            <label asp-for="Email" class="col-sm-3 col-form-label text-black fw-bold"></label>
+            <div class="col-sm-9">
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Hình ảnh -->
+        <div class="form-group row mb-3">
+            <label asp-for="HinhAnh" class="col-sm-3 col-form-label text-black fw-bold">Hình ảnh</label>
+            <div class="col-sm-9">
+                <input type="file" asp-for="HinhAnh" class="form-control" />
+                <span asp-validation-for="HinhAnh" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Địa chỉ -->
+        <div class="form-group row mb-3">
+            <label asp-for="DiaChi" class="col-sm-3 col-form-label text-black fw-bold"></label>
+            <div class="col-sm-9">
+                <input asp-for="DiaChi" class="form-control" />
+                <span asp-validation-for="DiaChi" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Nút submit -->
+        <div class="form-group row mt-4">
+            <div class="col-sm-9 offset-sm-3">
+                <input type="submit" value="Lưu" class="btn btn-dark fw-bold px-4" />
+                <a asp-action="Index" class="btn btn-secondary ms-2">Quay Lại</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

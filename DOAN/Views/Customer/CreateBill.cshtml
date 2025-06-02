@@ -1,0 +1,25 @@
+﻿@model DOAN.Models.Hoadon
+
+@{
+    ViewData["Title"] = "Đặt hàng thành công";
+}
+
+<div class="order-success-container my-5">
+    <div class="order-success-card shadow-lg">
+        <div class="order-success-header custom-bg-green text-white text-center">
+            <h3 class="mb-0 text-white">Đặt hàng thành công</h3>
+        </div>
+        <div class="order-success-body">
+            <div class="text-center mb-4">
+                <i class="fas fa-check-circle success-icon"></i>
+            </div>
+            <p class="order-success-message text-center">
+                Đơn hàng mã số <strong>@Model.MaHd</strong> trị giá <strong>@(Model.TongTien)đ</strong> đã được hệ thống ghi nhận.
+                Chúng tôi sẽ sớm liên hệ bạn để xác nhận và giao hàng.
+            </p>
+            <div class="text-center mt-4">
+                <a asp-controller="" asp-action="Index" class="btn btn-primary custom-btn" aria-label="Toggle navigation">Quay lại trang chủ</a>
+            </div>
+        </div>
+    </div>
+</div>

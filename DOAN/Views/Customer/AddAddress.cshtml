@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Thêm mới địa chỉ";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="AddAddress" method="post">
+
+    <div class="form-group">
+        <label for="diachi1">Địa chỉ:</label>
+        <input type="text" id="diachi1" name="chitiet" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="phuongxa">Phường/Xã:</label>
+        <input type="text" id="phuongxa" name="phuongxa" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="quanhuyen">Quận/Huyện:</label>
+        <input type="text" id="quanhuyen" name="quanhuyen" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="tinhthanh">Tỉnh/Thành:</label>
+        <input type="text" id="tinhthanh" name="tinhthanh" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Thêm</button>
+    <a asp-action="CustomerInfo" class="btn btn-secondary">Hủy</a>
+</form>
+

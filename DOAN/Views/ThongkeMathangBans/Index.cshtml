@@ -1,0 +1,123 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Thống kê số lượng bán theo tháng";
+}
+
+<!-- CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/buttons/3.2.2/css/buttons.dataTables.min.css" rel="stylesheet" />
+
+<h2 class="text-center my-4 text-primary">@ViewData["Title"]</h2>
+
+<!-- Biểu đồ cột -->
+<h4>📊 Biểu đồ thống kê theo tháng</h4>
+<canvas id="chartThang" height="100" class="mb-5"></canvas>
+
+<!-- Bảng thống kê -->
+<table id="myTable" class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Tên mặt hàng</th>
+            <th>Số lượng đã bán</th>
+            <th>Thời gian</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Ten</td>
+                <td>@item.SoLuongDaBan</td>
+                <td>@item.ThoiGian?.ToString("dd/MM/yyyy")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <!-- Chart.js + Zoom Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
+
+    <!-- Buttons Extension -->
+    <script src="https://cdn.datatables.net/buttons/3.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.2/js/buttons.print.min.js"></script>
+
+    <!-- Export Dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+
+    <script>
+        // Dữ liệu thống kê theo tháng từ ViewBag
+        const thangLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.ThangLabels));
+        const thangData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.ThangData));
+
+        // Cấu hình dữ liệu biểu đồ
+        const thangChartData = {
+            labels: thangLabels,
+            datasets: [{
+                label: 'Số lượng bán theo tháng',
+                data: thangData,
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        // Cấu hình biểu đồ
+        const thangChartConfig = {
+            type: 'bar',
+            data: thangChartData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: 'Biểu đồ số lượng bán theo tháng'
+                    },
+                    zoom: {
+                        pan: {
+                            enabled: true,
+                            mode: 'xy',
+                            speed: 10
+                        },
+                        zoom: {
+                            enabled: true,
+                            mode: 'xy',
+                            speed: 0.1,
+                            sensitivity: 3
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Số lượng' }
+                    },
+                    x: {
+                        title: { display: true, text: 'Tháng' }
+                    }
+                }
+            }
+        };
+
+        // Khởi tạo biểu đồ
+        new Chart(document.getElementById('chartThang'), thangChartConfig);
+
+        // Khởi tạo DataTable
+        new DataTable('#myTable', {
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    </script>
+}

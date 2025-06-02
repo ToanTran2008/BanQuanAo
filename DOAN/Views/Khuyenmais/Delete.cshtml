@@ -1,0 +1,49 @@
+﻿@model DOAN.Models.Khuyenmai
+
+@{
+    ViewData["Title"] = "Xóa khuyến mãi";
+}
+
+<h1 class="text-danger">Xóa khuyến mãi</h1>
+
+<h3 class="text-warning">Bạn có chắc chắn muốn xóa khuyến mãi này?</h3>
+
+<div class="card shadow p-4">
+    <h4 class="text-primary">Thông tin khuyến mãi</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">Tên khuyến mãi</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.TenKm)</dd>
+
+        <dt class="col-sm-3">Mô tả</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.MoTa)</dd>
+
+        <dt class="col-sm-3">Loại giảm giá</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.LoaiGiamGia)</dd>
+
+        <dt class="col-sm-3">Giá trị giảm</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.GiaTriGiam)</dd>
+
+        <dt class="col-sm-3">Điều kiện áp dụng</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.DieuKienApDung)</dd>
+
+        <dt class="col-sm-3">Ngày bắt đầu</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.NgayBatDau)</dd>
+
+        <dt class="col-sm-3">Ngày kết thúc</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.NgayKetThuc)</dd>
+
+        <dt class="col-sm-3">Trạng thái</dt>
+        <dd class="col-sm-9">
+            <span class="badge @(Model.TrangThai == "HoatDong" ? "bg-success" : (Model.TrangThai == "TamDung" ? "bg-warning" : "bg-secondary"))">
+                @(Model.TrangThai == "HoatDong" ? "Đang áp dụng" : (Model.TrangThai == "TamDung" ? "Tạm dừng" : "Ngừng áp dụng"))
+            </span>
+        </dd>
+    </dl>
+
+    <form asp-action="Delete" onsubmit="return confirm('Bạn có chắc chắn muốn xóa khuyến mãi này không?')">
+        <input type="hidden" asp-for="MaKm" />
+        <button type="submit" class="btn btn-danger">Xóa</button>
+        <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+    </form>
+</div>

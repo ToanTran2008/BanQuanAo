@@ -1,0 +1,86 @@
+﻿
+<h2>Trang Liên Hệ</h2>
+
+<div class="bg-light py-4 shadow-sm rounded">
+    <div class="container d-lg-flex justify-content-between align-items-center py-2 py-lg-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb flex-lg-nowrap justify-content-center justify-content-lg-start mb-0">
+                <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">
+                    Liên hệ
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+<section class="container py-5">
+    <div class="row g-4">
+        <div class="col-lg-3 col-md-6">
+            <div class="card shadow-sm border-0 text-center p-4 h-100">
+                <i class="ci-location h3 mb-3 text-primary"></i>
+                <h5 class="fw-bold">Địa chỉ cửa hàng</h5>
+                <p class="text-muted mb-2">69 Trần Hưng Đạo, Long Xuyên, An Giang</p>
+                <a href="#map" class="text-primary fw-bold">Xem bản đồ →</a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card shadow-sm border-0 text-center p-4 h-100">
+                <i class="ci-time h3 mb-3 text-primary"></i>
+                <h5 class="fw-bold">Giờ làm việc</h5>
+                <p class="text-muted">Thứ 2 - Thứ 6: 08:00 - 17:00</p>
+                <p class="text-muted">Thứ 7 - Chủ Nhật: 10:00 - 21:00</p>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card shadow-sm border-0 text-center p-4 h-100">
+                <i class="ci-phone h3 mb-3 text-primary"></i>
+                <h5 class="fw-bold">Điện thoại</h5>
+                <p class="text-muted">Bán hàng: <a href="tel:+84123456888" class="text-primary">0123 456 888</a></p>
+                <p class="text-muted">Hỗ trợ kỹ thuật: <a href="tel:+84123456999" class="text-primary">0123 456 999</a></p>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card shadow-sm border-0 text-center p-4 h-100">
+                <i class="ci-mail h3 mb-3 text-primary"></i>
+                <h5 class="fw-bold">Email</h5>
+                <p class="text-muted">Bán hàng: <a href="mailto:customer@itshop.vn" class="text-primary">customer@TBT.vn</a></p>
+                <p class="text-muted">Hỗ trợ: <a href="mailto:support@itshop.vn" class="text-primary">support@TBT.vn</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container py-5" id="map">
+    <div class="row g-4 align-items-center">
+        <div class="col-lg-6">
+            <iframe class="w-100 rounded shadow-sm" height="300"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3924.4039287068335!2d105.42805157429888!3d10.389457766213733!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1
+!3m3!1m2!1s0x310a72e9d35988f7%3A0x7dac16c79e25948!2zNjkgVHLhuqduIEjGsG5nIMSQ4bqhbywgUC4gTeG7uSBCw6xuaCwgVGjDoG5oIHBo4buRIExvbmcgWHV5w6puLCBBbiBHaWFuZyA4ODAwMDA
+sIFZpZXRuYW0!5e0!3m2!1sen!2sua!4v1698653118323!5m2!1sen!2sua"></iframe>
+        </div>
+        <div class="col-lg-6">
+            <h4 class="fw-bold mb-3">Để lại lời nhắn</h4>
+            <form class="needs-validation" novalidate>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Họ tên</label>
+                    <input type="text" id="name" name="hoten" class="form-control" placeholder="Nhập họ tên" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Nhập email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Số điện thoại</label>
+                    <input type="text" id="phone" name="dienthoai" class="form-control" placeholder="Nhập số điện thoại" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold" for="NoiDung">Nội dung <span class="text-danger">*</span></label>
+                    <textarea class="form-control border-0 shadow-sm" id="NoiDung" rows="5" required></textarea>
+                    <div class="invalid-feedback">Vui lòng nhập nội dung!</div>
+                </div>
+                <button class="btn btn-primary w-100 shadow-sm" type="submit">Gửi tin nhắn</button>
+            </form>
+        </div>
+    </div>
+</div>

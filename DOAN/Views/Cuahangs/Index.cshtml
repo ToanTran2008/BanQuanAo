@@ -1,0 +1,41 @@
+﻿@model IEnumerable<DOAN.Models.Cuahang>
+
+@{
+    ViewData["Title"] = "Danh sách cửa hàng";
+}
+
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover shadow-sm">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>Tên</th>
+                    <th>Điện thoại</th>
+                    <th>Email</th>
+                    <th>Hình ảnh</th>
+                    <th>Địa chỉ</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Ten)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DienThoai)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                        <td class="text-center">
+                            <img src="~/images/Logo.jpg" alt="Hình ảnh" class="img-thumbnail" style="width: 80px; height: 80px; object-fit: cover;">
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.DiaChi)</td>
+                        <td class="text-center">
+                        <a asp-action="Edit" asp-route-id="@item.MaCh" class="btn btn-dark fw-bold px-4">✏️ Sửa</a>
+                        <a asp-action="Details" asp-route-id="@item.MaCh" class="btn btn-secondary ms-2">ℹ️ Xem</a>
+                          
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

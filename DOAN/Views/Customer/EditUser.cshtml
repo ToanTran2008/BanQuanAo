@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Chỉnh sửa thông tin người dùng";
+}
+
+<h2>Chỉnh sửa thông tin người dùng</h2>
+
+<form asp-action="EditUser" method="post" class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label">Tên</label>
+        <input type="text" name="ten" class="form-control" value="@ViewBag.nguoidung.Ten" />
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Số điện thoại</label>
+        <input type="text" name="sdt" class="form-control" value="@ViewBag.nguoidung.DienThoai" />
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Mật khẩu mới</label>
+        <input type="password" name="matkhau" class="form-control" placeholder="Nhập mật khẩu mới (nếu muốn đổi)" />
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+        <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+    </div>
+</form>

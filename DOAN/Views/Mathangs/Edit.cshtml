@@ -1,0 +1,81 @@
+﻿@model DOAN.Models.Mathang
+
+@{
+    ViewData["Title"] = "Chỉnh sửa sản phẩm";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-lg p-4 border-0 rounded-3">
+        <h2 class="text-center text-primary fw-bold">Chỉnh Sửa Sản Phẩm</h2>
+        <hr />
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="MaMh" />
+
+            <div class="mb-3">
+                <label asp-for="Ten" class="form-label fw-bold">Tên sản phẩm</label>
+                <input asp-for="Ten" class="form-control shadow-sm" placeholder="Nhập tên sản phẩm" />
+                <span asp-validation-for="Ten" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="GiaGoc" class="form-label fw-bold">Giá gốc</label>
+                    <input asp-for="GiaGoc" class="form-control shadow-sm" type="number" min="0" placeholder="Nhập giá gốc" />
+                    <span asp-validation-for="GiaGoc" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="GiaBan" class="form-label fw-bold">Giá bán</label>
+                    <input asp-for="GiaBan" class="form-control shadow-sm" type="number" min="0" placeholder="Nhập giá bán" />
+                    <span asp-validation-for="GiaBan" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="SoLuong" class="form-label fw-bold">Số lượng</label>
+                    <input asp-for="SoLuong" class="form-control shadow-sm" type="number" min="1" placeholder="Nhập số lượng" />
+                    <span asp-validation-for="SoLuong" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="MaDm" class="form-label fw-bold">Danh mục</label>
+                    <select asp-for="MaDm" class="form-select shadow-sm" asp-items="ViewBag.MaDm"></select>
+                    <span asp-validation-for="MaDm" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="MoTa" class="form-label fw-bold">Mô tả</label>
+                <textarea asp-for="MoTa" class="form-control shadow-sm" rows="3" placeholder="Nhập mô tả sản phẩm"></textarea>
+                <span asp-validation-for="MoTa" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="HinhAnh" class="form-label fw-bold">Hình ảnh</label>
+                <input asp-for="HinhAnh" class="form-control shadow-sm" type="file" />
+                <span asp-validation-for="HinhAnh" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="LuotXem" class="form-label fw-bold">Lượt xem</label>
+                    <input asp-for="LuotXem" class="form-control shadow-sm bg-light" type="number" min="0" readonly />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="LuotMua" class="form-label fw-bold">Lượt mua</label>
+                    <input asp-for="LuotMua" class="form-control shadow-sm bg-light" type="number" min="0" readonly />
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <a asp-action="Index" class="btn btn-secondary px-4">Quay lại</a>
+                <button type="submit" class="btn btn-primary px-4">Lưu</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

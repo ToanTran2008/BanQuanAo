@@ -1,0 +1,65 @@
+﻿@model DOAN.Models.Mathang
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1 class="text-danger">Xóa Sản Phẩm </h1>
+
+<div class="alert alert-warning" role="alert">
+    <h3>Bạn chắc chăn muốn xóa sản phẩm này chứ!</h3>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Chi tiết sản phẩm</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-3 font-weight-bold">@Html.DisplayNameFor(model => model.Ten)
+            </dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Ten)
+            </dd>
+            <dt class="col-sm-3 font-weight-bold">@Html.DisplayNameFor(model => model.GiaGoc)
+            </dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.GiaGoc)
+            </dd>
+            <dt class="col-sm-3 font-weight-bold">@Html.DisplayNameFor(model => model.GiaBan)
+            </dt>
+            <dd class="col-sm-9 text-danger font-weight-bold">@Html.DisplayFor(model => model.GiaBan)
+            </dd>
+            <dt class="col-sm-3 font-weight-bold">@Html.DisplayNameFor(model => model.SoLuong)
+            </dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.SoLuong)
+            </dd>
+            <dt class="col-sm-3 font-weight-bold">@Html.DisplayNameFor(model => model.MoTa)
+            </dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.MoTa)
+            </dd>
+            <dt class="col-sm-3 font-weight-bold">@Html.DisplayNameFor(model => model.HinhAnh)
+            </dt>
+            <dd class="col-sm-9">
+                <img src="~/images/Products/@Html.DisplayFor(model => model.HinhAnh)" alt="Hình ảnh sản phẩm" />
+            </dd>
+            <dt class="col-sm-3 font-weight-bold">@Html.DisplayNameFor(model => model.LuotXem)
+            </dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.LuotXem)
+            </dd>
+            <dt class="col-sm-3 font-weight-bold">@Html.DisplayNameFor(model => model.LuotMua)
+            </dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.LuotMua)
+            </dd>
+            <dt class="col-sm-3 font-weight-bold">@Html.DisplayNameFor(model => model.MaDmNavigation)
+            </dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.MaDmNavigation.MaDm)
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<div class="mt-3">
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="MaMh" />
+        <button type="submit" class="btn btn-danger">Xóa</button>
+        <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+    </form>
+</div>

@@ -1,0 +1,80 @@
+﻿@model DOAN.Models.Hoadon
+
+@{
+    ViewData["Title"] = "Chi tiết Hóa đơn";
+}
+
+<h1 class="text-center mb-4">Chi tiết Hóa đơn</h1>
+
+<!-- Thông tin Hóa đơn -->
+<h3 class="hoadon-info mb-3">Thông tin Hóa đơn</h3>
+<div class="row">
+    <div class="col-sm-6">
+        <dl class="row">
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.MaNdNavigation.Ten)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.MaNdNavigation.Ten)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Ngay)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Ngay)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.TongTien)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.TongTien)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.TrangThai)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.TrangThai)
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<!-- Danh sách Mặt hàng -->
+<h3 class="mt-5 mb-3">Danh sách Mặt hàng</h3>
+<table class="table-hoadon table table-striped table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>Tên Mặt hàng</th>
+            <th>Hình ảnh</th>
+            <th>Đơn giá</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Cthoadons)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.MaMhNavigation.Ten)</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.MaMhNavigation.HinhAnh))
+                    {
+                        <img class="img-product" src="~/images/Products/@item.MaMhNavigation.HinhAnh" alt="Hình ảnh sản phẩm" />
+                    }
+                    else
+                    {
+                        <img class="img-product" src="~/images/Products/default.jpg" alt="Hình ảnh sản phẩm" />
+                    }
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.DonGia)</td>
+                <td>@Html.DisplayFor(modelItem => item.SoLuong)</td>
+                <td>@Html.DisplayFor(modelItem => item.ThanhTien)</td>
+            </tr>
+        }
+    </tbody>
+  
+</table>
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+</div>

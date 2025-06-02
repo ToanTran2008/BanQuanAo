@@ -1,0 +1,62 @@
+﻿@model DOAN.Models.Nguoidung
+
+@{
+    ViewData["Title"] = "Chỉnh sửa thông tin";
+}
+
+<h1 class="text-dark">Chỉnh sửa thông tin</h1>
+<h4 class="text-secondary">Người dùng</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MaNd" />
+
+            <div class="form-group">
+                <label asp-for="Ten" class="control-label text-dark"></label>
+                <input asp-for="Ten" class="form-control border-dark" />
+                <span asp-validation-for="Ten" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DienThoai" class="control-label text-dark"></label>
+                <input asp-for="DienThoai" class="form-control border-dark" />
+                <span asp-validation-for="DienThoai" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email" class="control-label text-dark"></label>
+                <input asp-for="Email" class="form-control border-dark" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <!-- Mật khẩu -->
+            <div class="form-group">
+                <label asp-for="MatKhau" class="control-label text-dark"></label>
+                <input asp-for="MatKhau" type="password" class="form-control border-dark" />
+                <span asp-validation-for="MatKhau" class="text-danger"></span>
+            </div>
+
+            <!-- Loại người dùng -->
+            <div class="form-group">
+                <label asp-for="LoaiNd" class="control-label">Loại người dùng</label>
+                <select asp-for="LoaiNd" class="form-control" asp-items="ViewBag.LoaiNd">
+                    <option value="">Chọn loại người dùng</option>
+                </select>
+                <span asp-validation-for="LoaiNd" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <button type="submit" class="btn btn-dark">Lưu</button>
+                <a asp-action="Index" class="btn btn-outline-secondary">Quay lại</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

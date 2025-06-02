@@ -1,0 +1,27 @@
+﻿@model DOAN.Models.Danhmuc
+
+@{
+    ViewData["Title"] = "Chi tiết danh mục";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-lg p-4" style="background-color: #fff; border-radius: 10px; color: #000;">
+        <h2 class="text-center">Chi tiết danh mục</h2>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-3 fw-bold">@Html.DisplayNameFor(model => model.Ten)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Ten)</dd>
+
+            <dt class="col-sm-3 fw-bold">@Html.DisplayNameFor(model => model.MoTa)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.MoTa)</dd>
+        </dl>
+        <div class="text-center mt-4">
+            <a asp-action="Edit" asp-route-id="@Model?.MaDm" class="btn btn-dark me-2">
+                <i class="bi bi-pencil-square"></i> Chỉnh sửa
+            </a>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle"></i> Quay Lại
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Hồ sơ khách hàng";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        @if (ViewBag.nguoidung != null)
+        {
+            <div class="text-center">
+                <h2 class="text-primary">Chào, @ViewBag.nguoidung.Ten!</h2>
+                <p class="text-muted">Thông tin cá nhân của bạn</p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <ul class="list-group">
+                        <li class="list-group-item"><strong>Email:</strong> @ViewBag.nguoidung.Email</li>
+                        <li class="list-group-item"><strong>Số điện thoại:</strong> @ViewBag.nguoidung.DienThoai</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    @if (ViewBag.diachi != null)
+                    {
+                        <div class="mb-3">
+                            <strong>Địa chỉ:</strong>
+                            <ul class="list-group">
+                                @foreach (var diaChi in ViewBag.diachi)
+                                {
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>@diaChi.ChiTiet, @diaChi.PhuongXa, @diaChi.QuanHuyen, @diaChi.TinhThanh</span>
+                                        <div>
+                                            <a asp-action="EditAddressItem" asp-route-id="@diaChi.MaDc" class="btn btn-sm btn-warning">Chỉnh sửa</a>
+                                            <a asp-action="DeleteAddress" asp-route-id="@diaChi.MaDc" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa địa chỉ này?');">Xóa</a>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                            <a asp-action="AddAddress" class="btn btn-primary mt-3">Thêm địa chỉ mới</a>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <a asp-action="EditUser" class="btn btn-outline-primary">Chỉnh sửa thông tin</a>
+                <a asp-action="Signout" class="btn btn-outline-danger">Đăng xuất</a>
+            </div>
+        }
+        else
+        {
+            <p class="text-center text-muted">
+                Vui lòng <a asp-action="Login" class="text-primary">đăng nhập</a> để xem thông tin cá nhân.
+            </p>
+        }
+    </div>
+</div>

@@ -1,0 +1,68 @@
+﻿@model IEnumerable<DOAN.Models.Diachi>
+
+@{
+    ViewData["Title"] = "Danh sách Địa chỉ";
+}
+
+<h1 class="text-center mb-4">Danh sách Địa chỉ</h1>
+
+<!--<p>
+    <a asp-action="Create" class="btn btn-success">Thêm Địa chỉ mới</a>
+</p>-->
+<br />
+<table class="table table-striped table-bordered table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MaNdNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChiTiet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhuongXa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QuanHuyen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TinhThanh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MacDinh)
+            </th>
+            <th style="width: 210px;"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaNdNavigation.Ten)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ChiTiet)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhuongXa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuanHuyen)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TinhThanh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MacDinh)
+                </td>
+
+                <td>
+                    <!--<a asp-action="Edit" asp-route-id="@item.MaDc" class="btn btn-warning btn-sm">Cập nhật</a>-->
+                    <a asp-action="Details" asp-route-id="@item.MaDc" class="btn btn-info btn-sm">Chi tiết</a>
+                    <a asp-action="Delete" asp-route-id="@item.MaDc" class="btn btn-danger btn-sm">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

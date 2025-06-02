@@ -1,0 +1,77 @@
+﻿@model DOAN.Models.Diachi
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1 class="text-center text-primary my-4">Thêm Mới Địa Chỉ</h1>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary">
+                <h4 align="center" class="text-white">Thông Tin Địa Chỉ</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="MaNd" class="control-label">Chọn Người Dùng</label>
+                        <select asp-for="MaNd" class="form-control" asp-items="ViewBag.MaNd">
+                            <option value="">Chọn người dùng</option>
+                        </select>
+                        <span asp-validation-for="MaNd" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="ChiTiet" class="control-label">Chi Tiết Địa Chỉ</label>
+                        <input asp-for="ChiTiet" class="form-control" placeholder="Nhập chi tiết địa chỉ" />
+                        <span asp-validation-for="ChiTiet" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="PhuongXa" class="control-label">Phường/Xã</label>
+                        <input asp-for="PhuongXa" class="form-control" placeholder="Nhập phường/xã" />
+                        <span asp-validation-for="PhuongXa" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="QuanHuyen" class="control-label">Quận/Huyện</label>
+                        <input asp-for="QuanHuyen" class="form-control" placeholder="Nhập quận/huyện" />
+                        <span asp-validation-for="QuanHuyen" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="TinhThanh" class="control-label">Tỉnh/Thành</label>
+                        <input asp-for="TinhThanh" class="form-control" placeholder="Nhập tỉnh/thành phố" />
+                        <span asp-validation-for="TinhThanh" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="MacDinh" class="control-label">Mặc Định</label>
+                        <select asp-for="MacDinh" class="form-control">
+                            <option value="1">Mặc định</option>
+                            <option value="0">Không</option>
+                        </select>
+                        <span asp-validation-for="MacDinh" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group text-center mb-3">
+                        <input type="submit" value="Thêm Mới Địa Chỉ" class="btn btn-success btn-lg" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-4">
+    <a asp-action="Index" class="btn btn-link">Quay lại danh sách</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

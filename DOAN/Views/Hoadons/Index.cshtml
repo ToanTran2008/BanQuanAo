@@ -1,0 +1,114 @@
+﻿@model IEnumerable<DOAN.Models.Hoadon>
+
+@{
+    ViewData["Title"] = "Danh sách hóa đơn";
+}
+
+<!-- CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/buttons/3.2.2/css/buttons.dataTables.min.css" rel="stylesheet" />
+
+<h1 class="text-center text-primary my-4"> Danh Sách Hóa Đơn</h1>
+
+<table id="hoaDonTable" class="table table-striped table-hover table-bordered">
+    <thead class="table-dark text-center">
+        <tr>
+            <th>Ngày</th>
+            <th>Tổng tiền</th>
+            <th>Trạng thái</th>
+            <th>Người dùng</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="text-center align-middle">
+                <td>@(item.Ngay.HasValue ? item.Ngay.Value.ToString("dd/MM/yyyy") : "Chưa có ngày")</td>
+                <td>@(item.TongTien.HasValue ? item.TongTien.Value.ToString("N0") + " đ" : "0 đ")</td>
+                <td>
+                    @if (item.TrangThai == "Đang xử lý")
+                    {
+                        <span class="badge bg-warning text-dark">Đang xử lý</span>
+                    }
+                    else if (item.TrangThai == "Hoàn thành")
+                    {
+                        <span class="badge bg-success">Hoàn thành</span>
+                    }
+                    else if (item.TrangThai == "Hủy")
+                    {
+                        <span class="badge bg-danger">Hủy</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">@item.TrangThai</span>
+                    }
+                </td>
+                <td>@item.MaNdNavigation?.MaNd</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.MaHd" class="btn btn-warning btn-sm">
+                        <i class="bi bi-pencil-square"></i> Cập Nhật
+                    </a>
+                    <a asp-action="Details" asp-route-id="@item.MaHd" class="btn btn-info btn-sm text-white">
+                        <i class="bi bi-eye"></i> Chi tiết
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <!-- JS thư viện cần thiết -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
+
+    <!-- Buttons -->
+    <script src="https://cdn.datatables.net/buttons/3.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.2/js/buttons.print.min.js"></script>
+
+    <!-- Export hỗ trợ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
+    <script>
+        new DataTable('#hoaDonTable', {
+            responsive: true,
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'copyHtml5',
+                    className: 'btn btn-outline-secondary btn-sm'
+                },
+                {
+                    extend: 'excelHtml5',
+                    className: 'btn btn-outline-success btn-sm'
+                },
+                {
+                    extend: 'csvHtml5',
+                    className: 'btn btn-outline-primary btn-sm'
+                },
+                {
+                    extend: 'pdfHtml5',
+                    className: 'btn btn-outline-danger btn-sm'
+                },
+                {
+                    extend: 'print',
+                    className: 'btn btn-outline-dark btn-sm'
+                }
+            ],
+            language: {
+                search: "Tìm kiếm:",
+                lengthMenu: "Hiển thị _MENU_ hóa đơn",
+                info: "Hiển thị _START_ đến _END_ trong tổng _TOTAL_ hóa đơn",
+                paginate: {
+                    previous: "Trước",
+                    next: "Sau"
+                }
+            }
+        });
+    </script>
+}

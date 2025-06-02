@@ -1,0 +1,51 @@
+﻿@model DOAN.Models.Danhmuc
+
+@{
+    ViewData["Title"] = "Chỉnh sửa danh mục";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-lg p-4" style="background-color: #fff; border-radius: 10px; color: #000;">
+        <h2 class="text-center">Chỉnh sửa danh mục</h2>
+        <div class="alert alert-warning text-center">
+            <strong>Lưu ý!</strong> Hãy kiểm tra kỹ thông tin trước khi lưu thay đổi.
+        </div>
+        <hr />
+
+        <form asp-action="Edit" id="editForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MaDm" />
+
+            <div class="mb-3">
+                <label asp-for="Ten" class="form-label fw-bold">Tên danh mục</label>
+                <input asp-for="Ten" class="form-control" placeholder="Nhập tên danh mục..." />
+                <span asp-validation-for="Ten" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="MoTa" class="form-label fw-bold">Mô tả</label>
+                <textarea asp-for="MoTa" class="form-control" rows="3" placeholder="Nhập mô tả..."></textarea>
+                <span asp-validation-for="MoTa" class="text-danger"></span>
+            </div>
+
+            <div class="text-center mt-4">
+                <a asp-action="Index" class="btn btn-secondary ms-2">
+                    <i class="fas fa-arrow-left"></i> Quay lại
+                </a>
+                <button type="submit" class="btn btn-dark fw-bold px-4" id="saveBtn">
+                    <i class="fas fa-save"></i> Lưu thay đổi
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById("saveBtn").addEventListener("click", function (event) {
+            if (!confirm("Bạn có chắc chắn muốn lưu thay đổi này không?")) {
+                event.preventDefault();
+            }
+        });
+    </script>
+}

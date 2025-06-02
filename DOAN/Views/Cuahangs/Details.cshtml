@@ -1,0 +1,38 @@
+﻿@model DOAN.Models.Cuahang
+
+@{
+    ViewData["Title"] = "Store Details";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-lg p-4" style="background-color: #fff; border-radius: 10px; color: #000;">
+        <h2 class="text-center">Chi Tiết Cửa Hàng</h2>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-3 fw-bold">@Html.DisplayNameFor(model => model.Ten)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Ten)</dd>
+
+            <dt class="col-sm-3 fw-bold">@Html.DisplayNameFor(model => model.DienThoai)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.DienThoai)</dd>
+
+            <dt class="col-sm-3 fw-bold">@Html.DisplayNameFor(model => model.Email)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Email)</dd>
+
+            <dt class="col-sm-3 fw-bold">@Html.DisplayNameFor(model => model.HinhAnh)</dt>
+            <dd class="col-sm-9">
+                <img src="~/images/Logo.jpg" class="img-thumbnail" alt="Store Image" style="max-width: 150px; height: auto;" />
+            </dd>
+
+            <dt class="col-sm-3 fw-bold">@Html.DisplayNameFor(model => model.DiaChi)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.DiaChi)</dd>
+        </dl>
+        <div class="text-center mt-4">
+            <a asp-action="Edit" asp-route-id="@Model?.MaCh" class="btn btn-dark me-2">
+                <i class="bi bi-pencil-square"></i> Chỉnh sửa
+            </a>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle"></i> Quay Lại
+            </a>
+        </div>
+    </div>
+</div>

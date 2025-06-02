@@ -1,0 +1,33 @@
+﻿@model DOAN.Models.Nguoidung
+
+@{
+    ViewData["Title"] = "Chi tiết người dùng";
+}
+
+<h1 class="text-center">Thông tin người dùng</h1>
+
+<div class="container mt-4 p-4 border rounded shadow-sm">
+    <h4 class="mb-3">Chi tiết</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3 fw-bold">Tên:</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Ten)</dd>
+
+        <dt class="col-sm-3 fw-bold">Điện thoại:</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.DienThoai)</dd>
+
+        <dt class="col-sm-3 fw-bold">Email:</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Email)</dd>
+
+        <dt class="col-sm-3 fw-bold">Mật khẩu:</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.MatKhau)</dd>
+
+        <dt class="col-sm-3 fw-bold">Loại người dùng:</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.LoaiNd)</dd>
+    </dl>
+
+    <div class="text-center mt-4">
+        <a asp-action="Edit" asp-route-id="@Model?.MaNd" class="btn btn-dark">Chỉnh sửa</a>
+        <a asp-action="Index" class="btn btn-outline-dark">Quay lại danh sách</a>
+    </div>
+</div>

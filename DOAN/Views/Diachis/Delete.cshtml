@@ -1,0 +1,65 @@
+﻿@model DOAN.Models.Diachi
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="confirm-delete-container">
+    <h1 class="confirm-delete-title">Xác nhận xóa địa chỉ</h1>
+
+    <h3 class="confirm-delete-subtitle">Bạn chắc chắn muốn xóa địa chỉ này không?</h3>
+
+    <div>
+        <h4 class="product-info-title">Thông tin địa chỉ</h4>
+        <hr />
+        <dl class="row product-info-section">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.MaNdNavigation)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MaNdNavigation.Ten)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ChiTiet)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ChiTiet)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.PhuongXa)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PhuongXa)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.QuanHuyen)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.QuanHuyen)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.TinhThanh)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.TinhThanh)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.MacDinh)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MacDinh)
+            </dd>
+        </dl>
+
+        <div class="form-group text-center">
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="MaDc" />
+                <button type="submit" class="btn btn-danger btn-lg form-action-btn">Xóa địa chỉ</button>
+            </form>
+        </div>
+
+        <div class="form-group text-center mt-3">
+            <a asp-action="Index" class="btn btn-secondary btn-lg back-btn">Trở lại danh sách</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,322 @@
+﻿@model IEnumerable<DOAN.Models.Mathang>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<section class="trending-product section" style="margin-top: 12px;">
+        <div class="container" style="margin-top: 50px;">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-title text-center p-4 rounded shadow-lg"
+                         style="background: linear-gradient(135deg, #333 0%, #555 100%);
+                           color: white; border-radius: 12px;">
+                    <h2 style="font-size: 2rem; font-weight: bold; text-transform: uppercase;
+                          letter-spacing: 2px; margin-bottom: 10px; color: white;">
+                        ✨ Tất cả các sản phẩm Nổi Bật✨
+                    </h2>
+                        </h2>
+                        <p style="font-size: 1.2rem; opacity: 0.9;">
+                            Hãy khám phá ngay để chọn cho bản thân những món đồ yêu thích nhất của bạn,
+                            thể hiện <strong>chất riêng</strong> của bạn.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            @{
+                var selectedIds = new List<int> { 5, 6, 7, 8 }; // Danh sách ID sản phẩm cần hiển thị
+            }
+            @foreach (var item in Model.Where(m => selectedIds.Contains(m.MaMh))) // Lọc sản phẩm theo danh sách ID
+            {
+            <div class="col">
+                <!-- Card sản phẩm -->
+                <div class="card border-0 shadow-sm position-relative h-100">
+                    <a asp-controller="Customer" asp-action="Details" asp-route-id="@item.MaMh" class="product-link">
+                        <img class="card-img-top img-fluid" src="~/images/Products/@item.HinhAnh" asp-append-version="true" alt="@item.Ten">
+                    </a>
+
+                    <!-- Hiển thị nhãn hết hàng -->
+                    @if (item.SoLuong == 0)
+                    {
+                        <div class="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 fw-bold rounded-end">
+                            Hết hàng
+                        </div>
+                    }
+
+                    <div class="card-body text-center">
+                        <!-- Danh mục -->
+                        <span class="category">@Html.DisplayFor(modelItem => item.MaDmNavigation.Ten)</span>
+
+                        <!-- Tên sản phẩm -->
+                        <h5 class="card-title">
+                            <a asp-action="Details" asp-route-id="@item.MaMh" class="text-decoration-none text-dark fw-bold">@item.Ten</a>
+                        </h5>
+
+                        <!-- Đánh giá sao -->
+                        <div class="mb-2">
+                            @{
+                                var maMh = item.MaMh;
+                                var averageRating = ViewBag.AverageRatings != null && ViewBag.AverageRatings.ContainsKey(maMh)
+                                ? ViewBag.AverageRatings[maMh]
+                                : 0.0;
+                            }
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <i class="bi @(i <= Math.Floor(averageRating) ? "bi-star-fill text-warning" :
+                                            (i == Math.Ceiling(averageRating) && averageRating % 1 != 0 ? "bi-star-half text-warning" : "bi-star text-muted"))"></i>
+                            }
+                            <span class="small text-muted">(@averageRating.ToString("0.0"))</span>
+                        </div>
+
+                        <!-- Giá sản phẩm -->
+                        <p class="fw-bold text-danger">@item.GiaBan đ</p>
+
+                        <!-- Nút thêm vào giỏ hàng -->
+                        @if (ViewBag.nguoidung != null && item.SoLuong > 0)
+                        {
+                            <a asp-controller="Customer" asp-action="AddToCart" asp-route-id="@item.MaMh" class="btn btn-sm btn-outline-primary">
+                                <i class="lni lni-cart"></i> Thêm vào giỏ
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+  
+    <div class="container" style="margin-top: 50px;">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title text-center p-4 rounded shadow-lg"
+                     style="background: #1a1a1a; color: white; border-radius: 12px;">
+                    <h2 style="font-size: 2rem; font-weight: bold; text-transform: uppercase;
+                           letter-spacing: 2px; margin-bottom: 10px; color: white;">
+                         Các sản phẩm bán chạy nhất 
+                    </h2>
+                    <p style="font-size: 1.2rem; opacity: 0.9;">
+                        Hãy lựa chọn những món đồ phù hợp với <strong>phong cách thời trang</strong> của bạn!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        @{
+            var selectedIdsp = new List<int> { 9, 10, 13, 14 }; // Danh sách ID sản phẩm cần hiển thị
+        }
+        @foreach (var item in Model.Where(m => selectedIdsp.Contains(m.MaMh))) // Lọc sản phẩm theo danh sách ID bán chạy
+        {
+            <div class="col">
+                <!-- Card sản phẩm -->
+                <div class="card border-0 shadow-sm position-relative h-100">
+                    <a asp-controller="Customer" asp-action="Details" asp-route-id="@item.MaMh" class="product-link">
+                        <img class="card-img-top img-fluid" src="~/images/Products/@item.HinhAnh" asp-append-version="true" alt="@item.Ten">
+                    </a>
+
+                    <!-- Hiển thị nhãn hết hàng -->
+                    @if (item.SoLuong == 0)
+                    {
+                        <div class="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 fw-bold rounded-end">
+                            Hết hàng
+                        </div>
+                    }
+
+                    <div class="card-body text-center">
+                        <!-- Danh mục -->
+                        <span class="category">@Html.DisplayFor(modelItem => item.MaDmNavigation.Ten)</span>
+
+                        <!-- Tên sản phẩm -->
+                        <h5 class="card-title">
+                            <a asp-action="Details" asp-route-id="@item.MaMh" class="text-decoration-none text-dark fw-bold">@item.Ten</a>
+                        </h5>
+
+                        <!-- Đánh giá sao -->
+                        <div class="mb-2">
+                            @{
+                                var maMh = item.MaMh;
+                                var averageRating = ViewBag.AverageRatings != null && ViewBag.AverageRatings.ContainsKey(maMh)
+                                ? ViewBag.AverageRatings[maMh]
+                                : 0.0;
+                            }
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <i class="bi @(i <= Math.Floor(averageRating) ? "bi-star-fill text-warning" :
+                                            (i == Math.Ceiling(averageRating) && averageRating % 1 != 0 ? "bi-star-half text-warning" : "bi-star text-muted"))"></i>
+                            }
+                            <span class="small text-muted">(@averageRating.ToString("0.0"))</span>
+                        </div>
+
+                        <!-- Giá sản phẩm -->
+                        <p class="fw-bold text-danger">@item.GiaBan đ</p>
+
+                        <!-- Nút thêm vào giỏ hàng -->
+                        @if (ViewBag.nguoidung != null && item.SoLuong > 0)
+                        {
+                            <a asp-controller="Customer" asp-action="AddToCart" asp-route-id="@item.MaMh" class="btn btn-sm btn-outline-primary">
+                                <i class="lni lni-cart"></i> Thêm vào giỏ
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <!-- Mục Khuyến mãi -->
+    <!-- Mục Khuyến mãi -->
+    <div class="container my-5">
+        <h2 class="text-center fw-bold mb-4 text-uppercase" style="color: #ff5733;text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); background: linear-gradient(90deg, #ff8c00, #ff3d00); -webkit-background-clip: text;-webkit-text-fill-color: transparent; ">
+             Mục Khuyến mãi 🔥
+        </h2>
+        <div id="promotionCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="~/images/Banner1.jpg" alt="" class="d-block w-100 rounded-3 border border-danger shadow-lg">
+                </div>
+                <div class="carousel-item">
+                    <img src="~/images/Banner2.jpg" alt="" class="d-block w-100 rounded-3 border border-danger shadow-lg">
+                </div>
+                <div class="carousel-item">
+                    <img src="~/images/Banner3.jpg" alt="" class="d-block w-100 rounded-3 border border-danger shadow-lg">
+                </div>
+            </div>
+            <!-- Điều hướng -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#promotionCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#promotionCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row g-4">
+            @foreach (var item in Model.Where(m => m.MaKms != null && m.MaKms.Any()))
+            {
+                <div class="col-md-6 col-lg-4 col-xl-3 d-flex">
+                    <div class="card border-0 shadow-sm h-100 flex-fill">
+                        <a asp-controller="Customer" asp-action="Details" asp-route-id="@item.MaMh" class="d-block position-relative">
+                            <div class="ratio ratio-4x3 rounded-top overflow-hidden">
+                                <img class="img-fluid object-fit-cover"
+                                     src="~/images/Products/@item.HinhAnh"
+                                     asp-append-version="true"
+                                     alt="@item.Ten">
+                            </div>
+                            @if (item.SoLuong == 0)
+                            {
+                                <span class="position-absolute top-0 start-0 badge bg-danger text-white fw-bold">
+                                    Hết hàng
+                                </span>
+                            }
+                        </a>
+
+                        <div class="card-body text-center d-flex flex-column">
+                            <p class="text-muted small mb-1">@Html.DisplayFor(modelItem => item.MaDmNavigation.Ten)</p>
+                            <h6 class="card-title flex-grow-1">
+                                <a asp-action="Details" asp-route-id="@item.MaMh" class="text-decoration-none text-dark fw-bold">
+                                    @item.Ten
+                                </a>
+                            </h6>
+
+                            <div class="mb-2">
+                                @{
+                                    var maMh = item.MaMh;
+                                    var averageRating = ViewBag.AverageRatings != null && ViewBag.AverageRatings.ContainsKey(maMh)
+                                    ? ViewBag.AverageRatings[maMh]
+                                    : 0.0;
+                                }
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    <i class="bi @(i <= Math.Floor(averageRating) ? "bi-star-fill text-warning" :
+                                (i == Math.Ceiling(averageRating) && averageRating % 1 != 0 ? "bi-star-half text-warning" : "bi-star text-muted"))"></i>
+                                }
+                                <span class="small text-muted">(@averageRating.ToString("0.0"))</span>
+                            </div>
+
+                            <p class="fw-bold text-danger h5">@item.GiaBan đ</p>
+
+                            <div class="text-success fw-bold">
+                                <i class="bi bi-tags-fill"></i> Khuyến mãi:
+                            </div>
+                            @{
+                                var displayedPromos = new HashSet<string>();
+                            }
+                            @foreach (var km in item.MaKms)
+                            {
+                                var promoKey = km.TenKm + km.GiaTriGiam;
+                                if (!displayedPromos.Contains(promoKey))
+                                {
+                                    displayedPromos.Add(promoKey);
+                                    <li class="text-danger">🔥 @km.TenKm - Giảm @km.GiaTriGiam</li>
+                                }
+                            }
+                            @if (ViewBag.nguoidung != null && item.SoLuong > 0)
+                            {
+                                <a asp-controller="Customer" asp-action="AddToCart" asp-route-id="@item.MaMh" class="btn btn-sm btn-outline-primary mt-auto">
+                                    <i class="lni lni-cart"></i> Thêm vào giỏ
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    
+</section>
+<style>
+    /* Hiệu ứng khi hover sản phẩm */
+    .product-link img {
+        transition: transform 0.3s ease-in-out;
+        object-fit: cover;
+        height: 250px; /* Cố định chiều cao ảnh */
+    }
+
+    .product-link:hover img {
+        transform: scale(1.05);
+    }
+
+    /* Căn chỉnh khoảng cách giữa các phần tử */
+    .card {
+        transition: all 0.3s ease-in-out;
+        display: flex;
+        flex-direction: column;
+        height: 100%; /* Đảm bảo mọi card có chiều cao bằng nhau */
+    }
+
+        .card:hover {
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+    /* Căn chỉnh nội dung trong card-body */
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex-grow: 1; /* Đảm bảo phần body mở rộng đủ để giữ vị trí */
+    }
+
+        /* Đảm bảo nút luôn nằm ở dưới cùng */
+        .card-body .btn {
+            margin-top: auto;
+        }
+
+    /* Màu sắc cho sao đánh giá */
+    .bi-star-fill, .bi-star-half {
+        color: #f8c102;
+    }
+
+    .bi-star {
+        color: #dcdcdc;
+    }
+
+    .carousel-item img {
+        width: 100%; /* Đảm bảo ảnh chiếm toàn bộ khung */
+        height: 400px; /* Điều chỉnh chiều cao cố định */
+        object-fit: cover; /* Cắt ảnh để vừa với khung mà không méo */
+    }
+</style>

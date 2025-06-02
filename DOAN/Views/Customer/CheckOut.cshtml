@@ -1,0 +1,89 @@
+﻿@model List<DOAN.Models.CartItem>
+@{
+    ViewData["Title"] = "Thanh toán";
+}
+<p>Vui lòng kiểm tra đầy đủ thông tin trước khi hoàn tất đơn hàng</p>
+<div class="row">
+    <div class="col">
+        <h4 class="text-primary">Thông tin khách hàng</h4>
+        <form asp-action="CreateBill">
+            <div class="mb-3">
+                <label>Email</label>
+                <input name="email" class="form-control" type="text" value="@ViewBag.nguoidung.Email" readonly />
+            </div>
+            <div class="mb-3">
+                <label>Họ tên</label>
+                <input name="hoten" class="form-control" type="text" value="@ViewBag.nguoidung.Ten" readonly />
+            </div>
+            <div class="mb-3">
+                <label>Điện thoại</label>
+                <input name="dienthoai" class="form-control" type="text" value="@ViewBag.nguoidung.DienThoai" readonly />
+            </div>
+            <div class="mb-3">
+                <label>Địa chỉ</label>
+                <select name="diachi" class="form-control">
+                    @if (ViewBag.diachi != null)
+                    {
+                        foreach (var diachi in ViewBag.diachi)
+                        {
+                            <option value="@diachi.MaDc">@diachi.ChiTiet, @diachi.PhuongXa, @diachi.QuanHuyen, @diachi.TinhThanh</option>
+                        }
+                    }
+                    else
+                    {
+                        <option disabled>No addresses available</option>
+                    }
+                </select>
+            </div>
+            <div>
+                 <label>Phương thức thanh toán</label>
+                 <select name="MaPttt" class="form-control">
+                     <option value="3">Chuyển khoản</option>
+                     <option value="2">Tiền mặt</option>
+                     <option value="4">Ví điện tử</option>
+                 </select>
+             </div>
+            <div class="mb-3">
+                <input type="submit" class="btn btn-primary" value="Xác nhận đơn hàng" />
+            </div>
+        </form>
+    </div>
+    <div class="col">
+        <h4 class="text-info">Thông tin đơn hàng</h4>
+        @if (Model.Count > 0)
+        {
+            int stt = 1;        // số thứ tự
+            int thanhtien = 0;     // thành tiền
+            int tongtien = 0;      // tổng tiền
+
+            <table class="table">
+                <tr class="table-info">
+                    <th>STT</th>
+                    <th>Sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                </tr>
+                @foreach (var i in Model)
+                {
+                    thanhtien = i.MatHang.GiaBan * i.SoLuong ?? 1;
+                    tongtien += thanhtien;
+                    <tr class="align-middle">
+                        <td>@(stt++)</td>
+                        <td>
+                            <img src="~/images/products/@(i.MatHang.HinhAnh)" class="img-thumbnail" width="50" />
+                            @(i.MatHang.Ten)
+                        </td>
+                        <td>@(i.MatHang.GiaBan?.ToString("n0")) đ</td>
+                        <td>@(i.SoLuong)</td>
+                        <td>@(thanhtien.ToString("n0")) đ</td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="4" class="text-end fw-bold">Thành tiền</td>
+                    <td><strong class="text-danger">@(tongtien.ToString("n0")) đ</strong></td>
+                </tr>
+            </table>
+        }
+    </div>
+</div>

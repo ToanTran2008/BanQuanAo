@@ -1,0 +1,55 @@
+﻿@model IEnumerable<DOAN.Models.Danhmuc>
+
+@{
+    ViewData["Title"] = "Danh sách danh mục";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-lg p-4" style="background-color: #fff; border-radius: 10px; color: #000;">
+        <h2 class="text-center">Danh sách danh mục</h2>
+        <hr />
+        <div class="d-flex justify-content-end mb-3">
+            <a asp-action="Create" class="btn btn-dark">
+                <i class="bi bi-plus-circle"></i> Thêm danh mục
+            </a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-light table-hover shadow-sm">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="text-center">Tên danh mục</th>
+                        <th class="text-center">Mô tả</th>
+                        <th class="text-center">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.Ten)</td>
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.MoTa)</td>
+                            <td class="text-center">
+                                <a asp-action="Edit" asp-route-id="@item.MaDm" class="btn btn-dark btn-sm">
+                                    <i class="bi bi-pencil-square"></i> Sửa
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.MaDm" class="btn btn-secondary btn-sm">
+                                    <i class="bi bi-eye"></i> Xem
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.MaDm" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa danh mục này?');">
+                                    <i class="bi bi-trash"></i> Xóa
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="text-center mt-4">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle"></i> Quay lại trang chủ
+            </a>
+        </div>
+    </div>
+</div>

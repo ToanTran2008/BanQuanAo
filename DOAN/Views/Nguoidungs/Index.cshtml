@@ -1,0 +1,39 @@
+﻿@model IEnumerable<DOAN.Models.Nguoidung>
+
+@{
+    ViewData["Title"] = "Danh sách người dùng";
+}
+
+<h1 class="text-dark">Danh sách người dùng</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-dark text-white">Thêm mới</a>
+</p>
+
+<table class="table table-bordered table-hover bg-white text-dark">
+    <thead class="table-dark text-white">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Ten)</th>
+            <th>@Html.DisplayNameFor(model => model.DienThoai)</th>
+            <th>@Html.DisplayNameFor(model => model.Email)</th>
+            <th>@Html.DisplayNameFor(model => model.LoaiNd)</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Ten)</td>
+                <td>@Html.DisplayFor(modelItem => item.DienThoai)</td>
+                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                <td>@Html.DisplayFor(modelItem => item.LoaiNd)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.MaNd" class="btn btn-sm btn-outline-dark">Sửa</a>
+                    <a asp-action="Details" asp-route-id="@item.MaNd" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
+                    <a asp-action="Delete" asp-route-id="@item.MaNd" class="btn btn-sm btn-outline-danger">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

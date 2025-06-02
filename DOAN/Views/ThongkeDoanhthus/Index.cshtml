@@ -1,0 +1,128 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Thống kê doanh thu";
+    var thangNamLabels = ViewBag.ThangNamLabels as List<string>;
+    var danhThuData = ViewBag.DanhThuData;
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/buttons/3.2.2/css/buttons.dataTables.min.css" rel="stylesheet" />
+
+<div class="container mt-4">
+    <h2 class="mb-4 text-center text-primary">📊 Thống kê doanh thu theo phương thức và thời gian</h2>
+
+    <!-- Biểu đồ -->
+    <div class="mb-5">
+        <canvas id="revenueChart" width="400" height="200"></canvas>
+    </div>
+
+    <!-- Bảng dữ liệu -->
+    <table id="myTable" class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Phương thức thanh toán</th>
+                <th>Tháng</th>
+                <th>Năm</th>
+                <th>Doanh thu</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.PhuongThuc</td>
+                    <td>@item.Thang</td>
+                    <td>@item.Nam</td>
+                    <td>@String.Format("{0:N0} VNĐ", item.DoanhThu)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- DataTables Core -->
+    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
+
+    <!-- DataTables Buttons Extension -->
+    <script src="https://cdn.datatables.net/buttons/3.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.2/js/buttons.print.min.js"></script>
+
+    <!-- Export dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+
+    <!-- Khởi tạo DataTable với các nút -->
+    <script>
+        new DataTable('#myTable', {
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    </script>
+
+    <!-- Biểu đồ doanh thu -->
+    <script>
+        const labels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(thangNamLabels));
+        const rawData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(danhThuData));
+
+        const colors = [
+            'rgba(54, 162, 235, 0.7)',
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(255, 206, 86, 0.7)',
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(153, 102, 255, 0.7)',
+            'rgba(255, 159, 64, 0.7)'
+        ];
+
+        const datasets = rawData.map((item, index) => ({
+            label: item.PhuongThuc,
+            data: item.Data,
+            backgroundColor: colors[index % colors.length],
+            borderColor: colors[index % colors.length].replace("0.7", "1"),
+            borderWidth: 1
+        }));
+
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Biểu đồ doanh thu theo phương thức và thời gian',
+                        font: {
+                            size: 18
+                        }
+                    },
+                    legend: {
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function (value) {
+                                return value.toLocaleString('vi-VN') + ' VNĐ';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}

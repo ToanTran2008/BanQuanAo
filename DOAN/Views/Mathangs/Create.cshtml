@@ -1,0 +1,81 @@
+﻿@model DOAN.Models.Mathang
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1 class="text-center text-primary my-4">Thêm Mới Sản Phẩm</h1>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-primary text-white text-center">
+                <h4>Thông Tin Sản Phẩm</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Ten" class="form-label fw-bold">Tên sản phẩm</label>
+                        <input asp-for="Ten" class="form-control" placeholder="Nhập tên sản phẩm" />
+                        <span asp-validation-for="Ten" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="MoTa" class="form-label fw-bold">Mô tả</label>
+                        <textarea asp-for="MoTa" class="form-control" rows="3" placeholder="Nhập mô tả"></textarea>
+                        <span asp-validation-for="MoTa" class="text-danger"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="GiaGoc" class="form-label fw-bold">Giá gốc</label>
+                            <input asp-for="GiaGoc" class="form-control" type="number" min="0" placeholder="Nhập giá gốc" />
+                            <span asp-validation-for="GiaGoc" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="GiaBan" class="form-label fw-bold">Giá bán</label>
+                            <input asp-for="GiaBan" class="form-control" type="number" min="0" placeholder="Nhập giá bán" />
+                            <span asp-validation-for="GiaBan" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="SoLuong" class="form-label fw-bold">Số lượng</label>
+                            <input asp-for="SoLuong" class="form-control" type="number" min="0" placeholder="Nhập số lượng" />
+                            <span asp-validation-for="SoLuong" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="MaDm" class="form-label fw-bold">Danh mục</label>
+                            <select asp-for="MaDm" class="form-select" asp-items="ViewBag.MaDm">
+                                <option value="">Chọn danh mục</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="HinhAnh" class="form-label fw-bold">Hình ảnh</label>
+                        <input type="file" asp-for="HinhAnh" class="form-control" />
+                        <span asp-validation-for="HinhAnh" class="text-danger"></span>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success btn-lg">Thêm Mới Sản Phẩm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-4">
+    <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

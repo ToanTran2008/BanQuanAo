@@ -1,0 +1,63 @@
+﻿@model DOAN.Models.Diachi
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="container d-flex justify-content-center">
+    <div class="details-container">
+        <h1>Chi tiết địa chỉ</h1>
+
+        <div>
+            <h4>Thông tin địa chỉ</h4>
+            <hr />
+            <dl class="details-list row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.MaNdNavigation)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.MaNdNavigation.Ten)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ChiTiet)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ChiTiet)
+                </dd>
+
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.PhuongXa)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.PhuongXa)
+                </dd>
+
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.QuanHuyen)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.QuanHuyen)
+                </dd>
+
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.TinhThanh)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.TinhThanh)
+                </dd>
+
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.MacDinh)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.MacDinh)
+                </dd>
+            </dl>
+        </div>
+
+        <div class="details-actions">
+            <a asp-action="Edit" asp-route-id="@Model?.MaDc" class="btn btn-primary btn-lg">Sửa thông tin</a>
+            <a asp-action="Index" class="btn btn-secondary btn-lg">Quay lại danh sách</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+﻿@model DOAN.Models.Danhmuc
+
+@{
+    ViewData["Title"] = "Xóa danh mục";
+}
+
+<h1 class="text-center text-light">Xóa danh mục</h1>
+
+<div class="alert alert-danger text-center shadow-lg">
+    <strong>Cảnh báo!</strong> Hành động này sẽ xóa danh mục vĩnh viễn.
+</div>
+
+<div class="card bg-dark text-light shadow-lg p-4 mx-auto" style="max-width: 500px;">
+    <div class="card-body">
+        <h4 class="card-title">Thông tin danh mục</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-4 text-end fw-bold">Tên danh mục:</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Ten)</dd>
+
+            <dt class="col-sm-4 text-end fw-bold">Mô tả:</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.MoTa)</dd>
+        </dl>
+
+        <div class="d-flex justify-content-between mt-4">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Quay lại
+            </a>
+            <form asp-action="Delete" onsubmit="return confirm('Bạn có chắc chắn muốn xóa danh mục này không?');">
+                <input type="hidden" asp-for="MaDm" />
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Xóa danh mục
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

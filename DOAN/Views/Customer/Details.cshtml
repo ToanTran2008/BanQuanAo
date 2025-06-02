@@ -1,0 +1,271 @@
+﻿@model DOAN.Models.Mathang
+
+@{
+    ViewData["Title"] = "Details";
+}
+@if (TempData["ReviewSuccess"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["ReviewSuccess"]
+    </div>
+}
+@if (TempData["ReviewError"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ReviewError"]
+    </div>
+}
+
+
+<!-- Start Item Details -->
+<section class="item-details section">
+    <div class="container">
+        <div class="top-area">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-12 col-12">
+                    <div class="product-images">
+                        <main id="gallery">
+                            <div class="main-img">
+                                <img style="height: 500px;" src="~/images/Products/@Html.DisplayFor(model => model.HinhAnh)" id="current" alt="Hình ảnh sản phẩm">
+                            </div>
+                        </main>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12 col-12">
+                    <div class="product-info">
+                        <h2 class="title">Tên sản phẩm: @Html.DisplayFor(model => model.Ten)</h2>
+                        <p class="category">
+                            <i class="lni lni-tag"></i> Phân loại:<a href="javascript:void(0)">
+                                @Html.DisplayFor(model => model.MaDmNavigation.Ten)
+                            </a>
+                        </p>
+                        <h3 class="price">Giá:  @Html.DisplayFor(model => model.GiaBan) đ</h3>
+
+                        <p class="purchases">
+                            <i class="lni lni-cart"></i> Lượt mua: <span id="purchase-count"> @Html.DisplayFor(model => model.LuotMua)</span>
+                        </p>
+
+                        <p class="rating-info">
+                            Đánh giá:
+                            <span id="avg-rating">
+                                @{
+                                    var maMh = Model.MaMh; // Lấy mã sản phẩm hiện tại
+                                    var averageRating = 0.0;
+
+                                    if (ViewBag.AverageRatings != null && ViewBag.AverageRatings.ContainsKey(maMh))
+                                    {
+                                        averageRating = ViewBag.AverageRatings[maMh];
+                                    }
+
+                                    // Tô màu số sao tương ứng với averageRating
+                                    for (int i = 1; i <= 5; i++)
+                                    {
+                                        if (i <= Math.Floor(averageRating)) // Nguyên phần sao
+                                        {
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                        }
+                                        else if (i == Math.Ceiling(averageRating) && averageRating % 1 != 0) // Nửa sao
+                                        {
+                                            <i class="bi bi-star-half text-warning"></i>
+                                        }
+                                        else // Sao trống
+                                        {
+                                            <i class="bi bi-star text-warning"></i>
+                                        }
+                                    }
+                                    @if (averageRating > 0)
+                                    {
+                                        @($"{averageRating:0.0} ")
+                                    }
+                                    else
+                                    {
+                                        <span>0.0</span>
+                                    }
+                                }
+                            </span>
+                        </p>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-12">
+                                <div class="form-group quantity">
+                                    <label for="quantity">Số lượng</label>
+                                    <div class="quantity-input d-flex align-items-center">
+                                        <button class="btn btn-outline-secondary" type="button" id="decrease">-</button>
+                                        <input type="number" id="quantity" class="form-control text-center mx-2" value="1" min="1" max="100">
+                                        <button class="btn btn-outline-secondary" type="button" id="increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bottom-content">
+                            <div class="row align-items-end">
+                                @if (ViewBag.nguoidung != null)
+                                {
+                                    <div class="col-lg-4 col-md-4 col-12">
+                                        <div class="button review-button text-center">
+                                            <a asp-action="Index" class="btn btn-info btn-lg text-white fw-bold shadow">
+                                                <i class="bi bi-arrow-left"></i> Quay lại 
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-12">
+                                        <div class="button cart-button text-center">
+                                            @if (Model.SoLuong > 0) // Chỉ thêm vào giỏ khi còn hàng
+                                            {
+                                                <a asp-controller="Customer" asp-action="AddToCart" asp-route-id="@Model.MaMh"
+                                                   class="btn btn-primary btn-lg fw-bold shadow" style="width: 100%; padding: 12px 0;">
+                                                    <i class="bi bi-cart-plus"></i> Thêm vào giỏ hàng
+                                                </a>
+                                            }
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-12">
+                                        <div class="button review-button text-center">
+                                            <button class="btn btn-lg fw-bold text-white shadow custom-review-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                <i class="bi bi-star-fill"></i> Đánh giá
+                                            </button>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product-details-info">
+            <div class="single-block">
+                <div class="row">
+                    <div class="col-lg-6 col-12">
+                        <div class="info-body custom-responsive-margin">
+                            <h4>Mô tả</h4>
+                            <p>
+                                @Html.DisplayFor(model => model.MoTa)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Đánh giá sản phẩm -->
+        <section class="reviews-section">
+            <h3>Đánh giá sản phẩm</h3>
+            @if (Model.Danhgia != null && Model.Danhgia.Any())
+            {
+                <div class="reviews-container">
+                    @foreach (var review in Model.Danhgia)
+                    {
+                        <div class="review-item">
+                            <div class="review-header">
+                                <strong>@review.MaNdNavigation.Ten</strong> -
+                                <span class="review-stars">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        if (i <= review.Rating)
+                                        {
+                                            <i class="bi bi-star-fill text-warning"></i> <!-- Sao vàng đầy -->
+                                        }
+                                        else
+                                        {
+                                            <i class="bi bi-star text-warning"></i> <!-- Sao trống -->
+                                        }
+                                    }
+                                </span>
+                            </div>
+                            <div class="review-body">
+                                <p>@review.BinhLuan</p>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            }
+            else
+            {
+                <p>Chưa có đánh giá cho sản phẩm này.</p>
+            }
+        </section>
+
+    </div>
+
+
+</section>
+<!-- End Item Details -->
+<!-- Review Modal -->
+<div class="modal fade review-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        @if (ViewBag.nguoidung != null)
+        {
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Đánh giá sản phẩm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form asp-action="SubmitReview" method="post">
+                    <input type="hidden" name="maMh" value="@Model.MaMh" />
+                    <input type="hidden" name="maND" value="@ViewBag.nguoidung.MaNd" />
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="review-name">Tên của bạn</label>
+                                    <input class="form-control" type="text" id="review-name" disabled value="@ViewBag.nguoidung?.Ten">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="review-email">Email của bạn</label>
+                                    <input class="form-control" type="email" id="review-email" disabled value="@ViewBag.nguoidung?.Email">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="review-rating">Sao</label>
+                                    <select class="form-control" id="review-rating" name="sao">
+                                        <option value="5">5 Sao</option>
+                                        <option value="4">4 Sao</option>
+                                        <option value="3">3 Sao</option>
+                                        <option value="2">2 Sao</option>
+                                        <option value="1">1 Sao</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="review-message">Bình luận</label>
+                            <textarea class="form-control" id="review-message" name="binhluan" rows="8" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer button">
+                        <button type="submit" class="btn btn-primary">Hoàn thành</button>
+                    </div>
+                </form>
+
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    document.getElementById('decrease').addEventListener('click', function () {
+        const quantityInput = document.getElementById('quantity');
+        let currentValue = parseInt(quantityInput.value);
+        if (currentValue > 1) {
+            quantityInput.value = currentValue - 1;
+        }
+    });
+
+    document.getElementById('increase').addEventListener('click', function () {
+        const quantityInput = document.getElementById('quantity');
+        let currentValue = parseInt(quantityInput.value);
+        if (currentValue < 100) { // Giới hạn số lượng tối đa
+            quantityInput.value = currentValue + 1;
+        }
+    });
+</script>

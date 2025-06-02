@@ -1,0 +1,78 @@
+﻿@model DOAN.Models.Diachi
+
+<input asp-for="TinhThanh" class="form-control" />
+<span asp-validation-for="TinhThanh" class="text-danger"></span>
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="edit-form">
+    <h1 class="edit-form-text-center mb-4">Sửa thông tin địa chỉ</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h4 class="edit-form-text-center">Thông tin địa chỉ</h4>
+            <hr />
+            <form asp-action="Edit" enctype="multipart/form-data" class="edit-form">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <input type="hidden" asp-for="MaDc" />
+
+                <!-- Mã người dùng -->
+                <div class="form-group">
+                    <label asp-for="MaNd" class="control-label">Mã người dùng</label>
+                    <select asp-for="MaNd" class="form-control" asp-items="ViewBag.MaNd"></select>
+                    <span asp-validation-for="MaNd" class="text-danger"></span>
+                </div>
+
+                <!-- Chi tiết -->
+                <div class="form-group">
+                    <label asp-for="ChiTiet" class="control-label">Chi tiết địa chỉ</label>
+                    <input asp-for="ChiTiet" class="form-control" />
+                    <span asp-validation-for="ChiTiet" class="text-danger"></span>
+                </div>
+
+                <!-- Phường/xã -->
+                <div class="form-group">
+                    <label asp-for="PhuongXa" class="control-label">Phường/xã</label>
+                    <input asp-for="PhuongXa" class="form-control" />
+                    <span asp-validation-for="PhuongXa" class="text-danger"></span>
+                </div>
+
+                <!-- Quận/huyện -->
+                <div class="form-group">
+                    <label asp-for="QuanHuyen" class="control-label">Quận/huyện</label>
+                    <input asp-for="QuanHuyen" class="form-control" />
+                    <span asp-validation-for="QuanHuyen" class="text-danger"></span>
+                </div>
+
+                <!-- Tỉnh thành -->
+                <div class="form-group">
+                    <label asp-for="TinhThanh" class="control-label">Tỉnh/thành phố</label>
+                </div>
+
+                <!-- Mặc định -->
+                <div class="form-group">
+                    <label asp-for="MacDinh" class="control-label">Đặt làm địa chỉ mặc định</label>
+                    <input asp-for="MacDinh" class="form-control" />
+                    <span asp-validation-for="MacDinh" class="text-danger"></span>
+                </div>
+
+                <!-- Nút submit -->
+                <div class="form-group">
+                    <input type="submit" value="Lưu thay đổi" class="btn btn-primary btn-lg w-100 edit-form-btn" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="edit-form-btn-container">
+        <a asp-action="Index" class="btn btn-secondary btn-lg">Quay lại danh sách</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

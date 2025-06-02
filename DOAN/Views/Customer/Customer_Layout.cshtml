@@ -1,0 +1,395 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TranToan_SHOP</title>
+ 
+
+    <link rel="stylesheet" href="~/css/customerinfo.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/detail.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel=" stylesheet" href="~/assets/css/LineIcons.3.0.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/assets/css/tiny-slider.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/assets/css/glightbox.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/assets/css/main.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+    #chat-messages {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .chat-bubble {
+        padding: 8px 12px;
+        margin: 6px 0;
+        border-radius: 12px;
+        max-width: 85%;
+        word-wrap: break-word;
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .user-message {
+        background-color: #dcf8c6;
+        align-self: flex-end;
+        margin-left: auto;
+    }
+
+    .bot-message {
+        background-color: #f1f0f0;
+        align-self: flex-start;
+        margin-right: auto;
+    }
+
+    .chat-bubble img {
+        border-radius: 6px;
+        margin-top: 5px;
+    }
+
+     keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+</head>
+<body>
+    <header class="header navbar-area">
+
+        @*<partial name="_LoginPartial" /> *@
+        <div class="header-middle">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-3 col-7">
+                        <!-- Start Header Logo -->
+                        <a class="navbar-brand" asp-action="Index" style="color: black !important;">
+                        @if (ViewBag.cuahang != null)
+                        {
+                        <img style="height: 80px; width: 80px;" src="~/images/Logo.jpg" alt="Logo">
+                        @ViewBag.cuahang.Ten
+                        }
+                        </a> *
+                        <!-- End Header Logo -->
+                    </div>
+                    <div class="col-lg-5 col-md-7 d-xs-none">
+                        <!-- Start Main Menu Search -->
+                        <div class="main-menu-search bg-white p-2 rounded border border-2 border-dark">
+                            <!-- Navbar search start -->
+                            <form asp-action="Search" method="post" class="d-flex">
+                                <div class="input-group">
+                                    <input type="text" name="searchTerm" class="form-control bg-white text-black border-0 shadow-none" placeholder="Tìm kiếm">
+                                    <button type="submit" class="btn btn-dark shadow-none">
+                                        <i class="lni lni-search-alt"></i>
+                                    </button>
+                                </div>
+                            </form>
+                            <!-- Navbar search Ends -->
+                        </div>
+
+                        <!-- End Main Menu Search -->
+                    </div>
+                    <div class="col-lg-4 col-md-2 col-5">
+                        <div class="middle-right-area">
+                            <div class="nav-hotline">
+                                <i class="lni lni-phone"></i>
+                                <h3>
+                                    Hotline:
+                                    @if (ViewBag.cuahang != null)
+                                    {
+                                        <span>@ViewBag.cuahang.DienThoai</span>
+                                    }
+                                </h3>
+                            </div>
+                            <div class="user-options d-flex justify-content-end align-items-center">
+                                @if (ViewBag.nguoidung != null) //bắt đã đăng nhập
+                                {
+                                    <a asp-action="CustomerInfo">
+                                        <span class="hello-message me-3"> Chào @ViewBag.nguoidung.Ten</span>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <!-- Login/Signup Links -->
+                                    <a asp-action="Login" class="btn btn-outline-dark border-2 text-dark hover-effect">
+                                        <i class="bi bi-box-arrow-in-right"></i> Đăng nhập
+                                    </a>
+                                    <span class="mx-2"></span>
+                                    <a asp-action="Register" class="btn btn-outline-dark border-2 text-dark hover-effect">
+                                        <i class="bi bi-person-plus"></i> Đăng ký
+                                    </a>
+                                }
+
+                            </div>
+                            @if (ViewBag.nguoidung != null)
+                            {
+                                <div class="navbar-cart">
+                                    <div class="cart-items">
+                                        <a asp-controller="Customer" asp-action="ViewCart" class="main-btn">
+                                            <i class="lni lni-cart"></i>
+                                            <span class="total-items">@ViewData["soluong"]</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Header Middle -->
+        <!-- Start Header Bottom -->
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8 col-md-6 col-12">
+                    <div class="nav-inner">
+                        <!-- Start Navbar -->
+                        <nav class="navbar navbar-expand-lg">
+                            <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                    aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="toggler-icon"></span>
+                                <span class="toggler-icon"></span>
+                                <span class="toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                                <ul id="nav" class="navbar-nav ms-auto d-flex align-items-center" style="gap: 24px;">
+                                    <li class="nav-item">
+                                        <a asp-controller="Customer" asp-action="Index" class="active" aria-label="Toggle navigation" style="color: black;">
+                                            Trang chủ
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-area="" asp-controller="Customer" asp-action="Index1" aria-label="Toggle navigation">Sản phẩm</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dd-menu collapsed" href="javascript:void(0)" data-bs-toggle="collapse"
+                                           data-bs-target="#submenu-1-3" aria-controls="navbarSupportedContent"
+                                           aria-expanded="false" aria-label="Toggle navigation">Danh Mục Sản phẩm</a>
+                                        <ul class="sub-menu collapse" id="submenu-1-3">
+                                            @if (ViewBag.danhmuc != null && ((List<Danhmuc>)ViewBag.danhmuc).Any())
+                                            {
+                                                @foreach (var d in (List<Danhmuc>)ViewBag.danhmuc)
+                                                {
+                                                    <li class="nav-item"><a class="dropdown-item" asp-action="List" asp-route-id="@d.MaDm">@d.Ten</a></li>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <li class="nav-item"><a class="dropdown-item">Không có danh mục</a></li>
+                                            }
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dd-menu collapsed" href="javascript:void(0)" data-bs-toggle="collapse"
+                                           data-bs-target="#submenu-1-2" aria-controls="navbarSupportedContent"
+                                           aria-expanded="false" aria-label="Toggle navigation">Các trang</a>
+                                        <ul class="sub-menu collapse" id="submenu-1-2">
+                                            <li class="nav-item"><a asp-controller="" asp-action="CustomerInfo">Thông tin cá nhân</a></li>
+                                            @if (ViewBag.nguoidung != null) //đã đăng nhập
+                                            {
+                                                <li class="nav-item"><a asp-controller="Customer" asp-action="ViewCart">Giỏ Hàng</a></li>
+                                            }
+                                            <li class="nav-item"><a asp-controller="" asp-action="Login">Đăng nhập</a></li>
+                                            <li class="nav-item"><a asp-controller="" asp-action="Register">Đăng ký</a></li>
+                                            <li class="nav-item"><a asp-controller="" asp-action="Signout">Đăng xuất</a></li>
+                                        </ul>
+                                    </li>
+                                 
+                                        <li class="nav-item">
+                                            <a asp-area="" asp-controller="Customer" asp-action="LHIndex" aria-label="Toggle navigation">Liên hệ</a>
+                                        </li>
+                                    <li>
+                                        @if (ViewBag.nguoidung != null)
+                                        {
+                                            @if (ViewBag.nguoidung.LoaiNd != "Khách hàng")
+                                            {
+                                                <a asp-area="" asp-controller="Home" asp-action="Index" aria-label="Toggle navigation" style="color: black;">Quản lý</a>
+                                            }
+                                        }
+                                    </li>
+
+                                </ul>
+                            </div> <!-- navbar collapse -->
+                        </nav>
+                        <!-- End Navbar -->
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                    <!-- Start Nav Social -->
+                    <div class="nav-social">
+                        <h5 class="title">Theo dõi:</h5>
+                        <ul>
+                            <li>
+                                <a href="https://www.facebook.com/share/166Yc564s1/" target="_blank">
+                                    <i class="lni lni-facebook-filled"></i></a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)"><i class="lni lni-twitter-original"></i></a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)"><i class="lni lni-instagram"></i></a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)"><i class="lni lni-skype"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End Nav Social -->
+                </div>
+            </div>
+        </div>
+        <!-- End Header Bottom -->
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Start Footer Area -->
+    <footer class="footer">
+        <!-- Start Footer Top -->
+        <div class="footer-top">
+            <div class="container">
+                <div class="inner-content">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 col-12">
+                            <div class="footer-logo">
+                                <a asp-action="Index" class="text-light">
+                                    @if (ViewBag.cuahang != null)
+                                    {
+                                        <img style="height: 80px; width: 80px;" src="~/images/Logo.jpg" alt="Logo">
+                                        @ViewBag.cuahang.Ten
+                                    }
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-9 col-md-8 col-12">
+                            <div class="footer-newsletter">
+                                <h4 class="title">
+                                    Đăng ký nhận bản tin của chúng tôi
+                                    <span>Nhận tất cả thông tin mới nhất, khuyến mãi và ưu đãi.</span>
+                                </h4>
+                                <div class="newsletter-form-head">
+                                    <form action="#" method="get" target="_blank" class="newsletter-form">
+                                        <input name="EMAIL" placeholder="Địa chỉ email ở đây..." type="email">
+                                        <div class="button">
+                                            <button class="btn">Đặt mua<span class="dir-part"></span></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Footer Top -->
+        <!-- Start Footer Middle -->
+        <div class="footer-middle">
+            <div class="container">
+                <div class="bottom-inner">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-12">
+                            <!-- Single Widget -->
+                            <div class="single-footer f-contact">
+                                <h3>Liên hệ với chúng tôi</h3>
+                                <p class="phone">Điện thoại: @ViewBag.cuahang.DienThoai</p>
+                                <p class="phone">Địa chỉ:  @ViewBag.cuahang.DiaChi</p>
+                                <p class="mail">
+                                    <a href="mailto:@ViewBag.cuahang.Email">Email: @ViewBag.cuahang.Email</a>
+                                </p>
+                            </div>
+                            <!-- End Single Widget -->
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-12">
+                            <!-- Single Widget -->
+                            <div class="single-footer f-link">
+                                <h3>Thông tin</h3>
+                                <ul>
+                                    <li><a href="javascript:void(0)">Hướng dẫn mua hàng</a></li>
+                                    <li><a href="javascript:void(0)">Câu hỏi thường gặp</a></li>
+                                    <li><a href="javascript:void(0)">Liên hệ với chúng tôi</a></li>
+                                </ul>
+                            </div>
+                            <!-- End Single Widget -->
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-12">
+                            <!-- Single Widget -->
+                            <div class="single-footer f-link">
+                                <h3>Các thông tin khác</h3>
+                                <ul>
+                                    <li><a href="javascript:void(0)">Blog</a></li>
+                                    <li><a href="javascript:void(0)">Tin Tức</a></li>
+                                </ul>
+                            </div>
+                            <!-- End Single Widget -->
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-12">
+                            <!-- Single Widget -->
+                            <div class="single-footer f-link">
+                                <h3>Theo Dõi Chúng Tôi</h3>
+                                <ul>
+                                    <li><a href="javascript:void(0)"><i class="lni lni-facebook-filled"></i> Facebook</a></li>
+                                    <li><a href="javascript:void(0)"><i class="lni lni-twitter-original"></i> Twitter</a></li>
+                                    <li><a href="javascript:void(0)"><i class="lni lni-instagram"></i> Instagram</a></li>
+                                    <li><a href="javascript:void(0)"><i class="lni lni-google"></i> Google</a></li>
+                                </ul>
+                            </div>
+                            <!-- End Single Widget -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Footer Middle -->
+    </footer>
+    <!--/ End Footer Area -->
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+<script>
+    window.difyChatbotConfig = {
+        token: 'iWjnpYz1rahLCVzv'
+    };
+</script>
+<script src="https://udify.app/embed.min.js"
+        id="iWjnpYz1rahLCVzv"
+        defer></script>
+
+<style>
+    /* Chỉnh màu nền cho nút chatbot */
+    #dify-chatbot-bubble-button {
+        background-color: #1C64F2 !important; /* Màu xanh của AL */
+        border-radius: 50% !important; /* Viền bo tròn */
+        background-image: url('https://your-image-url.com/your-icon.png') !important; /* Đổi icon bằng hình ảnh của bạn */
+        background-size: cover !important; /* Đảm bảo icon sẽ được căn vừa */
+        background-position: center !important; /* Căn giữa ảnh */
+        width: 60px !important; /* Đảm bảo kích thước nút phù hợp */
+        height: 60px !important; /* Đảm bảo kích thước nút phù hợp */
+    }
+
+    /* Chỉnh kích thước và kiểu dáng cửa sổ chatbot */
+    #dify-chatbot-bubble-window {
+        width: 24rem !important; /* Chiều rộng cửa sổ */
+        height: 40rem !important; /* Chiều cao cửa sổ */
+    }
+</style>
+
+
+
+
+

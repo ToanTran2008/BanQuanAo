@@ -1,0 +1,41 @@
+﻿@model DOAN.Models.Khuyenmai
+
+@{
+    ViewData["Title"] = "Chi tiết khuyến mãi";
+}
+
+<h1 class="text-center my-4">Chi tiết khuyến mãi</h1>
+
+<div class="container">
+    <div class="card shadow-sm p-4 bg-light">
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>@Html.DisplayNameFor(model => model.TenKm):</strong> @Html.DisplayFor(model => model.TenKm)</p>
+                <p><strong>@Html.DisplayNameFor(model => model.MoTa):</strong> @Html.DisplayFor(model => model.MoTa)</p>
+                <p><strong>@Html.DisplayNameFor(model => model.LoaiGiamGia):</strong> @Html.DisplayFor(model => model.LoaiGiamGia)</p>
+                <p><strong>@Html.DisplayNameFor(model => model.GiaTriGiam):</strong> @Html.DisplayFor(model => model.GiaTriGiam)</p>
+            </div>
+
+            <div class="col-md-6">
+                <p><strong>@Html.DisplayNameFor(model => model.DieuKienApDung):</strong> @Html.DisplayFor(model => model.DieuKienApDung)</p>
+                <p><strong>@Html.DisplayNameFor(model => model.NgayBatDau):</strong> @Html.DisplayFor(model => model.NgayBatDau)</p>
+                <p><strong>@Html.DisplayNameFor(model => model.NgayKetThuc):</strong> @Html.DisplayFor(model => model.NgayKetThuc)</p>
+                <p>
+                    <strong>@Html.DisplayNameFor(model => model.TrangThai):</strong>
+                    @(Model.TrangThai == "HoatDong" ? "Hoạt động" :
+                        Model.TrangThai == "HetHan" ? "Hết hạn" :
+                        Model.TrangThai == "TamDung" ? "Tạm dừng" : "Không xác định")
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a asp-action="Edit" asp-route-id="@Model?.MaKm" class="btn btn-primary">
+            <i class="bi bi-pencil"></i> Chỉnh sửa
+        </a>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Quay lại danh sách
+        </a>
+    </div>
+</div>

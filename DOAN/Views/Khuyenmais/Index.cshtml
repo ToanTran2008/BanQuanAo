@@ -1,0 +1,128 @@
+﻿@model IEnumerable<DOAN.Models.Khuyenmai>
+
+@{
+    ViewData["Title"] = "Khuyến Mãi";
+}
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .table-container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .table thead {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .badge {
+        font-size: 14px;
+        padding: 8px 12px;
+        border-radius: 20px;
+    }
+
+    .btn {
+        transition: all 0.3s ease;
+    }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+    .btn-group a {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary fw-bold">Danh Sách Khuyến Mãi</h2>
+        <a asp-action="Create" class="btn btn-success fw-bold px-4 py-2">
+            <i class="bi bi-plus-lg"></i> Thêm Mới
+        </a>
+    </div>
+
+    <div class="table-container">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.TenKm)</th>
+                    <th>Mặt hàng áp dụng</th>
+                    <th>@Html.DisplayNameFor(model => model.MoTa)</th>
+                    <th>@Html.DisplayNameFor(model => model.LoaiGiamGia)</th>
+                    <th>@Html.DisplayNameFor(model => model.GiaTriGiam)</th>
+                    <th>@Html.DisplayNameFor(model => model.DieuKienApDung)</th>
+                    <th>@Html.DisplayNameFor(model => model.NgayBatDau)</th>
+                    <th>@Html.DisplayNameFor(model => model.NgayKetThuc)</th>
+                    <th>@Html.DisplayNameFor(model => model.TrangThai)</th>
+                    <th class="text-center">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="fw-bold">@Html.DisplayFor(modelItem => item.TenKm)</td>
+                        <td>
+                            @if (item.MaMhs != null && item.MaMhs.Any())
+                            {
+                                <ul class="mb-0">
+                                    @foreach (var mh in item.MaMhs)
+                                    {
+                                        <li>@mh.Ten</li>
+                                    }
+                                </ul>
+                            }
+                            else
+                            {
+                                <span class="text-muted">Không có mặt hàng</span>
+                            }
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.MoTa)</td>
+                        <td>@Html.DisplayFor(modelItem => item.LoaiGiamGia)</td>
+                        <td class="text-danger fw-bold">@Html.DisplayFor(modelItem => item.GiaTriGiam)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DieuKienApDung)</td>
+                        <td>@Html.DisplayFor(modelItem => item.NgayBatDau)</td>
+                        <td>@Html.DisplayFor(modelItem => item.NgayKetThuc)</td>
+                        <td>
+                            <span class="badge
+                                @(item.TrangThai == "HoatDong" ? "bg-success" :
+                                  item.TrangThai == "HetHan" ? "bg-danger" : "bg-warning")">
+                                @(item.TrangThai == "HoatDong" ? "Đang áp dụng" :
+                                    item.TrangThai == "HetHan" ? "Hết hạn" : "Tạm dừng")
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group gap-2">
+                                <a asp-action="Edit" asp-route-id="@item.MaKm" class="btn btn-warning shadow-sm">
+                                    <i class="bi bi-pencil-square fs-5"></i>
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.MaKm" class="btn btn-info shadow-sm">
+                                    <i class="bi bi-eye fs-5"></i>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.MaKm" class="btn btn-danger shadow-sm" onclick="return confirm('Bạn có chắc muốn xóa?');">
+                                    <i class="bi bi-trash fs-5"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

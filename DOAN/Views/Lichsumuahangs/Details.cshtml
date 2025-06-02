@@ -1,0 +1,41 @@
+﻿@model DOAN.Models.Lichsumuahang
+
+@{
+    ViewData["Title"] = "Chi Tiết Đơn Hàng";
+}
+
+<div class="card border-dark mb-3">
+    <div class="card-header d-flex align-items-center bg-primary text-white rounded-top shadow-sm">
+        <h4 class="mb-0 text-white">Thông Tin Chi Tiết</h4>
+    </div>
+    <div class="card-body text-dark">
+        <dl class="row">
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.NgayMua)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.NgayMua)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.TongTien)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.TongTien)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.TinhTrang)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.TinhTrang)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.GhiChu)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.GhiChu)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.MaHdNavigation)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.MaHdNavigation.MaHd)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.MaNdNavigation)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.MaNdNavigation.MaNd)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.MaPtttNavigation)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.MaPtttNavigation.TenPttt)</dd>
+
+        </dl>
+    </div>
+</div>
+
+<div>
+    
+    <a asp-action="Index" class="btn btn-dark text-white">Quay Lại</a>
+</div>

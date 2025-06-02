@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Đăng nhập";
+}
+<div class="container py-5">
+    <div class="row align-items-center justify-content-center">
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <img src="~/images/Login2.jpg" alt="Login Illustration" class="img-fluid d-none d-md-block">
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card shadow p-4">
+                <h3 class="text-center text-primary mb-4">ĐĂNG NHẬP</h3>
+                <!-- Hiển thị đăng nhập thất bại -->
+                @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+                {
+                    <div class="alert alert-danger text-center">
+                        @ViewBag.ErrorMessage
+                    </div>
+                }
+                <form method="post" asp-action="Login">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="text" id="email" name="email" class="form-control" placeholder="Nhập email của bạn" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Mật khẩu</label>
+                        <input type="password" id="password" name="matkhau" class="form-control" placeholder="Nhập mật khẩu" required>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                    </div>
+                </form>
+                <div class="text-center mt-3">
+                    <small>Chưa có tài khoản? <a asp-action="Register" class="text-decoration-none text-primary">Đăng ký</a></small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

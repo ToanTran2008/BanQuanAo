@@ -1,0 +1,56 @@
+﻿@model DOAN.Models.Danhgium
+
+@{
+    ViewData["Title"] = "Thêm Đánh Giá";
+}
+
+<h1 class="text-center my-4 text-primary">Thêm Đánh Giá</h1>
+
+<div class="card shadow p-4 mx-auto" style="max-width: 500px;">
+    <h4 class="card-title text-center mb-3 text-success">Nhập thông tin đánh giá</h4>
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <!-- Chọn mặt hàng -->
+        <div class="mb-3">
+            <label asp-for="MaMh" class="form-label fw-bold">Mặt hàng</label>
+            <select asp-for="MaMh" class="form-control" asp-items="ViewBag.MaMh"></select>
+        </div>
+
+        <!-- Chọn người dùng -->
+        <div class="mb-3">
+            <label asp-for="MaNd" class="form-label fw-bold">Người dùng</label>
+            <select asp-for="MaNd" class="form-control" asp-items="ViewBag.MaNd"></select>
+        </div>
+
+        <!-- Đánh giá sao -->
+        <div class="mb-3">
+            <label class="form-label fw-bold">Đánh giá</label>
+            <input asp-for="Rating" class="form-control" type="number" min="1" max="5" placeholder="Nhập số sao (1-5)">
+            <span asp-validation-for="Rating" class="text-danger"></span>
+        </div>
+
+        <!-- Bình luận -->
+        <div class="mb-3">
+            <label asp-for="BinhLuan" class="form-label fw-bold">Bình luận</label>
+            <textarea asp-for="BinhLuan" class="form-control" rows="3" placeholder="Nhập bình luận của bạn..."></textarea>
+            <span asp-validation-for="BinhLuan" class="text-danger"></span>
+        </div>
+
+        <!-- Nút tạo -->
+        <div class="d-flex justify-content-between">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Quay lại danh sách
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-check-circle"></i> Thêm đánh giá
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

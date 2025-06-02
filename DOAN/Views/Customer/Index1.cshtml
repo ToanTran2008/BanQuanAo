@@ -1,0 +1,126 @@
+﻿@model IEnumerable<DOAN.Models.Mathang>
+
+@{
+    ViewData["Title"] = "Danh sách sản phẩm";
+}
+
+<section class="trending-product section py-4">
+    <div class="container">
+        <!-- Tiêu đề danh mục -->
+        <div class="row mb-4 text-center">
+            <div class="col-12">
+                <h2 class="fw-bold text-uppercase">Tất cả sản phẩm</h2>
+                <p class="text-muted">
+                    Hãy khám phá ngay để chọn cho mình những món đồ uống yêu thích, phù hợp cho mọi dịp từ thư giãn, gặp gỡ bạn bè đến những buổi tiệc vui vẻ.
+                </p>
+            </div>
+        </div>
+
+        <!-- Danh sách sản phẩm -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col">
+                    <!-- Card sản phẩm -->
+                    <div class="card border-0 shadow-sm position-relative h-100">
+                        <a asp-controller="Customer" asp-action="Details" asp-route-id="@item.MaMh" class="product-link">
+                            <img class="card-img-top img-fluid" src="~/images/Products/@item.HinhAnh" asp-append-version="true" alt="@item.Ten">
+                        </a>
+
+                        <!-- Hiển thị nhãn hết hàng -->
+                        @if (item.SoLuong == 0)
+                        {
+                            <div class="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 fw-bold rounded-end">
+                                Hết hàng
+                            </div>
+                        }
+
+                        <div class="card-body text-center">
+                            <!-- Danh mục -->
+                            <span class="category">@Html.DisplayFor(modelItem => item.MaDmNavigation.Ten)</span>
+
+                            <!-- Tên sản phẩm -->
+                            <h5 class="card-title">
+                                <a asp-action="Details" asp-route-id="@item.MaMh" class="text-decoration-none text-dark fw-bold">@item.Ten</a>
+                            </h5>
+
+                            <!-- Đánh giá sao -->
+                            <div class="mb-2">
+                                @{
+                                    var maMh = item.MaMh;
+                                    var averageRating = ViewBag.AverageRatings != null && ViewBag.AverageRatings.ContainsKey(maMh)
+                                    ? ViewBag.AverageRatings[maMh]
+                                    : 0.0;
+                                }
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    <i class="bi @(i <= Math.Floor(averageRating) ? "bi-star-fill text-warning" :
+                                            (i == Math.Ceiling(averageRating) && averageRating % 1 != 0 ? "bi-star-half text-warning" : "bi-star text-muted"))"></i>
+                                }
+                                <span class="small text-muted">(@averageRating.ToString("0.0"))</span>
+                            </div>
+
+                            <!-- Giá sản phẩm -->
+                            <p class="fw-bold text-danger">@item.GiaBan đ</p>
+
+                            <!-- Nút thêm vào giỏ hàng -->
+                            @if (ViewBag.nguoidung != null && item.SoLuong > 0)
+                            {
+                                <a asp-controller="Customer" asp-action="AddToCart" asp-route-id="@item.MaMh" class="btn btn-sm btn-outline-primary">
+                                    <i class="lni lni-cart"></i> Thêm vào giỏ
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Hiệu ứng khi hover sản phẩm */
+    .product-link img {
+        transition: transform 0.3s ease-in-out;
+        object-fit: cover;
+        height: 250px; /* Cố định chiều cao ảnh */
+    }
+
+    .product-link:hover img {
+        transform: scale(1.05);
+    }
+
+    /* Căn chỉnh khoảng cách giữa các phần tử */
+    .card {
+        transition: all 0.3s ease-in-out;
+        display: flex;
+        flex-direction: column;
+        height: 100%; /* Đảm bảo mọi card có chiều cao bằng nhau */
+    }
+
+        .card:hover {
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+    /* Căn chỉnh nội dung trong card-body */
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex-grow: 1; /* Đảm bảo phần body mở rộng đủ để giữ vị trí */
+    }
+
+        /* Đảm bảo nút luôn nằm ở dưới cùng */
+        .card-body .btn {
+            margin-top: auto;
+        }
+
+    /* Màu sắc cho sao đánh giá */
+    .bi-star-fill, .bi-star-half {
+        color: #f8c102;
+    }
+
+    .bi-star {
+        color: #dcdcdc;
+    }
+</style>

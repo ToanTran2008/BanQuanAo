@@ -1,0 +1,105 @@
+﻿@model DOAN.Models.Khuyenmai
+
+@{
+    ViewData["Title"] = "Tạo khuyến mãi";
+}
+
+<h1 class="text-primary">🎉 Tạo Khuyến Mãi Mới</h1>
+
+<div class="card shadow-lg p-4">
+    <h4 class="text-secondary mb-3">📌 Thông Tin Khuyến Mãi</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Chọn mặt hàng áp dụng</label>
+                    <div class="d-flex flex-wrap gap-2">
+                        @foreach (var item in ViewBag.Mathangs)
+                        {
+                            <label class="btn btn-outline-primary text-dark">
+                                <input type="checkbox" name="MatHangIds" value="@item.MaMh" class="form-check-input me-2"> @item.Ten
+                            </label>
+                        }
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="TenKm" class="form-label fw-bold">Tên khuyến mãi</label>
+                    <input asp-for="TenKm" class="form-control" placeholder="Nhập tên khuyến mãi" />
+                    <span asp-validation-for="TenKm" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="MoTa" class="form-label fw-bold"> Mô tả</label>
+                    <textarea asp-for="MoTa" class="form-control" rows="3" placeholder="Nhập mô tả..."></textarea>
+                    <span asp-validation-for="MoTa" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="LoaiGiamGia" class="form-label fw-bold"> Loại giảm giá</label>
+                    <select asp-for="LoaiGiamGia" class="form-select" id="loaiGiamGiaSelect">
+                        <option value="PhanTram">Phần trăm</option>
+                        <option value="TienMat">Tiền mặt</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="GiaTriGiam" class="form-label fw-bold"> Giá trị giảm</label>
+                    <div class="input-group">
+                        <input asp-for="GiaTriGiam" type="number" class="form-control" placeholder="Nhập số tiền hoặc phần trăm" />
+                        <span class="input-group-text" id="giaTriGiamUnit">%</span>
+                    </div>
+                    <span asp-validation-for="GiaTriGiam" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="DieuKienApDung" class="form-label fw-bold"> Điều kiện áp dụng</label>
+                    <input asp-for="DieuKienApDung" type="number" class="form-control" placeholder="Nhập số tiền tối thiểu để áp dụng" />
+                    <span asp-validation-for="DieuKienApDung" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="NgayBatDau" class="form-label fw-bold"> Ngày bắt đầu</label>
+                        <input asp-for="NgayBatDau" type="date" class="form-control" />
+                        <span asp-validation-for="NgayBatDau" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="NgayKetThuc" class="form-label fw-bold"> Ngày kết thúc</label>
+                        <input asp-for="NgayKetThuc" type="date" class="form-control" />
+                        <span asp-validation-for="NgayKetThuc" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="TrangThai" class="form-label fw-bold"> Trạng thái</label>
+                    <select asp-for="TrangThai" class="form-select">
+                        <option value="HoatDong">Hoạt động</option>
+                        <option value="TamDung">Tạm dừng</option>
+                        <option value="NgungApDung">Ngừng áp dụng</option>
+                    </select>
+                    <span asp-validation-for="TrangThai" class="text-danger"></span>
+                </div>
+
+                <div class="mt-4 d-flex gap-3">
+                    <button type="submit" class="btn btn-success"><i class="bi bi-check-circle"></i> Tạo mới</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Hủy</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.getElementById("loaiGiamGiaSelect").addEventListener("change", function () {
+            let unitSpan = document.getElementById("giaTriGiamUnit");
+            unitSpan.textContent = this.value === "PhanTram" ? "%" : "VND";
+        });
+    </script>
+}

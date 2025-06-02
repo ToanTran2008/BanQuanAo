@@ -1,0 +1,81 @@
+﻿@model DOAN.Models.Danhgium
+
+@{
+    ViewData["Title"] = "Xóa Đánh Giá";
+}
+
+<h1 class="text-center my-4 text-danger">Xóa Đánh Giá</h1>
+
+<h3 class="text-center text-warning">Bạn có chắc chắn muốn xóa đánh giá này?</h3>
+
+<div class="card shadow p-4 mb-4 bg-light">
+    <h4 class="card-title text-primary mb-3">Thông tin đánh giá</h4>
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th class="w-25">Đánh giá</th>
+                <td>
+                    <span class="badge bg-success fs-6">@Html.DisplayFor(model => model.Rating) ★</span>
+                </td>
+            </tr>
+            <tr>
+                <th>Bình luận</th>
+                <td>@Html.DisplayFor(model => model.BinhLuan)</td>
+            </tr>
+            <tr>
+                <th>Ngày đánh giá</th>
+                <td>@Html.DisplayFor(model => model.NgayDanhGia)</td>
+            </tr>
+            <tr>
+                <th>Mặt hàng</th>
+                <td>@Html.DisplayFor(model => model.MaMhNavigation.MaMh)</td>
+            </tr>
+            <tr>
+                <th>Người dùng</th>
+                <td>@Html.DisplayFor(model => model.MaNdNavigation.MaNd)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+        <!-- Nút Xóa có xác nhận Modal -->
+        <div class="d-flex justify-content-between">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Quay lại danh sách
+            </a>
+
+            <!-- Nút kích hoạt modal xác nhận -->
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+                <i class="bi bi-trash"></i> Xóa
+            </button>
+        </div>
+
+<!-- Modal Xác Nhận Xóa -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn muốn xóa đánh giá này?</p>
+                <p>
+                    <strong>Đánh giá: </strong>
+                    <span class="badge bg-success fs-6">
+                        @Html.DisplayFor(model => model.Rating) ★
+                    </span>
+                </p>
+                <p><strong>Bình luận: </strong> @Html.DisplayFor(model => model.BinhLuan)</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <form asp-action="DeleteConfirmed" asp-route-id="@Model.MaDg" method="post">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash"></i> Xóa
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,100 @@
+﻿@model IEnumerable<DOAN.Models.Mathang>
+
+@{
+    ViewData["Title"] = "Kết quả tìm kiếm";
+}
+
+<section class="trending-product section" style="margin-top: 12px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title">
+                    <h2>@ViewBag.timkiem</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-3 col-md-6 col-12">
+
+                    <!-- Start Single Product -->
+                    <div class="single-product">
+                        <div class="product-image">
+                            <div class="" style="height: 300px;">
+                                <a asp-controller="" asp-action="Details" asp-route-id="@item.MaMh" style="width:100%; height:100%;">
+                                    <img class="card-img-top" src="~/images/Products/@item.HinhAnh" asp-append-version="true" alt="@item.Ten" style="width:100%; height:100%;" />
+                                </a>
+                            </div>
+                            @if (item.SoLuong == 0)
+                            {
+                                <div class="out-of-stock-overlay">
+                                    <span>Hết hàng</span>
+                                </div>
+                            }
+                            <div class="button">
+                                @if (ViewBag.nguoidung != null && item.SoLuong > 0) // Chỉ thêm vào giỏ khi còn hàng
+                                {
+                                    <a asp-controller="Customer" asp-action="AddToCart" asp-route-id="@item.MaMh" class="btn"><i class="lni lni-cart"></i>Thêm</a>
+                                }
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <span class="category">@Html.DisplayFor(modelItem => item.MaDmNavigation.Ten)</span>
+                            <h4 class="title">
+                                <a asp-action="Details" asp-route-id="@item.MaMh">@Html.DisplayFor(modelItem => item.Ten)</a>
+                            </h4>
+                            <ul class="review">
+                                @{
+                                    var maMh = item.MaMh; // Lấy mã sản phẩm hiện tại
+                                    var averageRating = 0.0;
+
+                                    if (ViewBag.AverageRatings != null && ViewBag.AverageRatings.ContainsKey(maMh))
+                                    {
+                                        averageRating = ViewBag.AverageRatings[maMh];
+                                    }
+
+                                    // Tô màu số sao tương ứng với averageRating
+                                    for (int i = 1; i <= 5; i++)
+                                    {
+                                        if (i <= Math.Floor(averageRating)) // Nguyên phần sao
+                                        {
+                                            <li><i class="bi bi-star-fill text-warning"></i></li>
+                                        }
+                                        else if (i == Math.Ceiling(averageRating) && averageRating % 1 != 0) // Nửa sao
+                                        {
+                                            <li><i class="bi bi-star-half text-warning"></i></li>
+                                        }
+                                        else // Sao trống
+                                        {
+                                            <li><i class="bi bi-star text-warning"></i></li>
+                                        }
+                                    }
+                                }
+
+                                <li>
+                                    <span>
+                                        @if (averageRating > 0)
+                                        {
+                                            @($"{averageRating:0.0} ")
+                                        }
+                                        else
+                                        {
+                                            <span>0.0</span>
+                                        }
+                                        Lượt xem (@Html.DisplayFor(modelItem => item.LuotXem))
+                                    </span>
+                                </li>
+                            </ul>
+                            <div class="price">
+                                <span>@Html.DisplayFor(modelItem => item.GiaBan) đ</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+            }
+        </div>
+    </div>
+</section>
+    <a href="@Url.Action("Index", "Customer")">Trở về trang chủ</a> thêm hì
